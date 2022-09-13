@@ -7,4 +7,4 @@ function Card(props){ return <div class="col">
                                 </div>
                             </div>;}
 
-module.exports = Card;
+export default Card;
