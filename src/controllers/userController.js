@@ -1,5 +1,5 @@
 exports.addUser = function (request, response){
-    response.send("Добавление пользователя");
+    response.render("/public/pages/signin.html");
 };
 exports.getUsers = function(request, response){
     response.send("Список пользователей");
