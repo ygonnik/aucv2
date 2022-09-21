@@ -8,11 +8,11 @@ import reportWebVitals from './reportWebVitals';
 const cardsReact = ReactDOM.createRoot(document.getElementById('cardsReact'));
 const app = ReactDOM.createRoot(document.getElementById('app'));
 
-app.render(
-<React.StrictMode>
-  <App />
-</React.StrictMode>
-);
+// app.render(
+// <React.StrictMode>
+//   <App />
+// </React.StrictMode>
+// );
 
 cardsReact.render(
   <React.StrictMode>
