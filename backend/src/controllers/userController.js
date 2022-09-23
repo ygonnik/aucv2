@@ -1,6 +1,15 @@
-exports.addUser = function (request, response){
-    response.render("/frontend/public/pages/signin.html");
-};
-exports.getUsers = function(request, response){
-    response.send("Список пользователей");
-};
+class UserController {
+    async registration(req, res) {
+
+    }
+
+    async login(req, res) {
+        
+    }
+
+    async check(req, res) {
+        
+    }
+}
+
+module.exports = new UserController();
