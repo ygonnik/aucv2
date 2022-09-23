@@ -4,13 +4,11 @@ const sequelize = require('./db/db');
 const models = require('./src/models/models.js');
 const PORT = process.env.PORT || 3001;
 const app = express();
-const userRouter = require("./src/routes/userRouter.js");
-const homeRouter = require("./src/routes/homeRouter.js");
+const router = require('./src/routes/index.js');
 
 
 
-app.use("/users", userRouter);
-app.use("/", homeRouter);
+app.use('/api', router);
 
 app.use(function (req, res, next) {
     res.status(404).send("Not Found");
