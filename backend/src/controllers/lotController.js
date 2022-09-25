@@ -1,6 +1,6 @@
 const uuid = require('uuid');
 const path = require('path');
-const {Bid} = require('../models/models')
+const {Lot} = require('../models/models')
 const ApiError = require('../../error/ApiError')
 class LotController {
     async create(req, res, next) {
@@ -33,8 +33,8 @@ class LotController {
 
     async getOne(req, res) {
         const {id} = req.params
-        const bids = await Bid.findOne({where: {id}})
-        return res.json(bids)
+        const lot = await Lot.findOne({where: {id}})
+        return res.json(lot)
     }
 }
 
