@@ -1,7 +1,7 @@
 import React, { createContext } from 'react';
 import ReactDOM from 'react-dom/client';
 import './styles/index.css';
-import Card from '../src/components/card.js';
+import Card from './components/LotItem.js';
 import App from './App.js';
 import reportWebVitals from './reportWebVitals';
 import UserStore from './store/UserStore';
