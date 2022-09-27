@@ -30,7 +30,6 @@ const Lot = sequelize.define('lot', {
     steering_wheel: {type: DataTypes.STRING, allowNull: false},
     description: {type: DataTypes.STRING, allowNull: true},
     start_price: {type: DataTypes.INTEGER, allowNull: false},
-    current_price: {type: DataTypes.INTEGER, allowNull: false},
     redemption_price: {type: DataTypes.INTEGER, allowNull: true},
     city: {type: DataTypes.STRING, allowNull: false},
     img: {type: DataTypes.STRING, allowNull: true},

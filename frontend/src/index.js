@@ -1,17 +1,23 @@
-import React from 'react';
+import React, { createContext } from 'react';
 import ReactDOM from 'react-dom/client';
 import './styles/index.css';
 import Card from '../src/components/card.js';
 import App from './App.js';
 import reportWebVitals from './reportWebVitals';
+import UserStore from './store/UserStore';
+import LotStore from './store/LotStore';
 
+export const Context = createContext(null);
 //const cardsReact = ReactDOM.createRoot(document.getElementById('cardsReact'));
 const app = ReactDOM.createRoot(document.getElementById('app'));
 
 app.render(
-<React.StrictMode>
-  <App />
-</React.StrictMode>
+  <Context.Provider value={{
+    user: new UserStore(),
+    lot: new LotStore()
+  }}>
+    <App />
+  </Context.Provider>,
 );
 
 // cardsReact.render(
