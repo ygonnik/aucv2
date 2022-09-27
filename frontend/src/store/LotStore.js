@@ -20,7 +20,7 @@ export default class LotStore {
             start_price: 30000,
             redemption_price: 200000,
             city: 'Тюмень',
-            img: 'https://github.com/ygonnik/aucv2/blob/master/backend/static/2020_Audi_A3.jpg',
+            img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/2020_Audi_A3_S_Line_Edition_1_35_TD_2.0.jpg/305px-2020_Audi_A3_S_Line_Edition_1_35_TD_2.0.jpg',
             userId: 1}
         ]
         this._bids = [

@@ -1,13 +1,13 @@
 import React from "react";
 
-const lotItem = (lot) =>{
+const lotItem = ({lot}) =>{
         return (
         <div class="col">
             <div class="card shadow-sm">
-            <img class="card-img-top" src={lot.img} alt="Card image cap"/>
+            <img src={lot.img} class="card-img-top"  alt=''/>
                 <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                    <h5 class="card-title">{lot.brand + ' ' + lot.model}</h5>
+                    <p class="card-text">{lot.description}</p>
                 </div>
             </div>
         </div>
