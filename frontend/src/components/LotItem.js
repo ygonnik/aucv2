@@ -1,8 +1,11 @@
 import React from "react";
+import {useNavigate} from 'react-router-dom'
+import {LOT_ROUTE} from '../utils/consts' 
 
-const lotItem = ({lot}) =>{
+const LotItem = ({lot}) =>{
+    const navigate = useNavigate()
         return (
-        <div class="col">
+        <div class="col" style={{cursor: 'pointer'}} onClick={() => navigate(LOT_ROUTE + '/' + lot.id)}>
             <div class="card shadow-sm">
             <img src={lot.img} class="card-img-top"  alt=''/>
                 <div class="card-body">
@@ -14,4 +17,4 @@ const lotItem = ({lot}) =>{
         );
     }
 
-export default lotItem;
+export default LotItem;
