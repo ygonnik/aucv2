@@ -56,18 +56,22 @@ function lotPage() {
             </div>
           </div>
           <div class="col-3 mt-auto">
-            <ul class="list-group list-group-horizontal ">
-                <li class="list-group-item rounded-0">Начальная цена</li>
-                <li class="list-group-item rounded-0">{lot.start_price}</li>
-            </ul>
-            { redemption ?
-              <ul class="list-group list-group-horizontal">
-                <li class="list-group-item rounded-0">Цена выкупа</li>
-                <li class="list-group-item rounded-0">{lot.redemption_price}</li>
-            </ul>
-            : null
-            }
-            <div class="input-group">
+            <table class="table table-bordered">
+              <tbody>
+                <tr>
+                  <th scope="row">Начальная цена</th>
+                  <td>{lot.start_price}</td>
+                </tr>
+                { redemption ?
+                <tr>
+                  <th scope="row">Цена выкупа</th>
+                  <td>{lot.redemption_price}</td>
+                </tr>
+                : null
+                }
+              </tbody>
+            </table>
+            <div class="input-group mt-2">
               <input type="text" class="form-control" aria-label="Рубли"/>
               <span class="input-group-text">₽</span>
               <button class="btn btn-outline-secondary" type="button" id="button-addon">Сделать ставку</button>
@@ -75,52 +79,56 @@ function lotPage() {
           </div>
         </div>
         <div class="row mt-4">
-          <div class="col">
-            <ul class="list-group list-group-horizontal ">
-              <li class="list-group-item rounded-0">Тип кузова</li>
-              <li class="list-group-item rounded-0">{lot.body_style}</li>
+          <table class="table table-bordered">
+            <tbody>
+              <tr>
+                <th scope="row">Тип кузова</th>
+                <td>{lot.body_style}</td>
+              </tr>
+              <tr>
+                <th scope="row">Объем двигателя</th>
+                <td>{lot.engine_volume / 1000} л.</td>
+              </tr>
+              <tr>
+                <th scope="row">Мощность</th>
+                <td>{lot.power} л.с.</td>
+              </tr>
+              <tr>
+                <th scope="row">Пробег</th>
+                <td>{lot.mileage} км.</td>
+              </tr>
+              <tr>
+                <th scope="row">Топливо</th>
+                <td>{lot.fuel}</td>
+              </tr>
+              <tr>
+                <th scope="row">Привод</th>
+                <td>{lot.drivetrain}</td>
+              </tr>
+              <tr>
+                <th scope="row">Трансмиссия</th>
+                <td>{lot.transmission}</td>
+              </tr>
+              <tr>
+                <th scope="row">Цвет</th>
+                <td>{lot.color}</td>
+              </tr>
+              <tr>
+                <th scope="row">Рулевое колесо</th>
+                <td>{lot.steering_wheel}</td>
+              </tr>
+              <tr>
+                <th scope="row">Город</th>
+                <td>{lot.city}</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="col ps-0">
+            <ul class="list-group list-group-horizontal mt-3 text-center ">
+              <li class="list-group-item rounded-0 fw-bold">Описание</li>
             </ul>
-            <ul class="list-group list-group-horizontal">
-              <li class="list-group-item rounded-0">Объем двигателя</li>
-              <li class="list-group-item rounded-0">{lot.engine_volume / 1000} л.</li>
-            </ul>
-            <ul class="list-group list-group-horizontal">
-              <li class="list-group-item rounded-0">Мощность</li>
-              <li class="list-group-item rounded-0">{lot.power} л.с.</li>
-            </ul>
-            <ul class="list-group list-group-horizontal">
-              <li class="list-group-item rounded-0">Пробег</li>
-              <li class="list-group-item rounded-0">{lot.mileage} км.</li>
-            </ul>
-            <ul class="list-group list-group-horizontal">
-              <li class="list-group-item rounded-0">Топливо</li>
-              <li class="list-group-item rounded-0">{lot.fuel}</li>
-            </ul>
-            <ul class="list-group list-group-horizontal">
-              <li class="list-group-item rounded-0">Привод</li>
-              <li class="list-group-item rounded-0">{lot.drivetrain}</li>
-            </ul>
-            <ul class="list-group list-group-horizontal">
-              <li class="list-group-item rounded-0">Трансмиссия</li>
-              <li class="list-group-item rounded-0">{lot.transmission}</li>
-            </ul>
-            <ul class="list-group list-group-horizontal">
-              <li class="list-group-item rounded-0">Цвет</li>
-              <li class="list-group-item rounded-0">{lot.color}</li>
-            </ul>
-            <ul class="list-group list-group-horizontal">
-              <li class="list-group-item rounded-0">Рулевое колесо</li>
-              <li class="list-group-item rounded-0">{lot.steering_wheel}</li>
-            </ul>
-            <ul class="list-group list-group-horizontal">
-              <li class="list-group-item rounded-0">Город</li>
-              <li class="list-group-item rounded-0">{lot.city}</li>
-            </ul>
-            <ul class="list-group list-group-horizontal mt-3">
-              <li class="list-group-item rounded-0">Описание</li>
-            </ul>
-            <ul class="list-group list-group-horizontal">
-              <li class="list-group-item rounded-0">{lot.description}</li>
+            <ul class="list-group list-group-horizontal mt-1">
+              <li class="list-group-item rounded-0 flex-fill">{lot.description}</li>
             </ul>
           </div>
         </div>
