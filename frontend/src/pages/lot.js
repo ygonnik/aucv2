@@ -125,9 +125,9 @@ function lotPage() {
           </table>
           <div class="col ps-0">
             <ul class="list-group list-group-horizontal mt-3 text-center ">
-              <li class="list-group-item rounded-0 fw-bold">Описание</li>
+              <li class="list-group-item rounded-0 fw-bold border border-bottom-0">Описание</li>
             </ul>
-            <ul class="list-group list-group-horizontal mt-1">
+            <ul class="list-group list-group-horizontal">
               <li class="list-group-item rounded-0 flex-fill">{lot.description}</li>
             </ul>
           </div>
