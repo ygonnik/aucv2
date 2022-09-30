@@ -5,7 +5,7 @@ import LotList from '../components/LotList';
 function home() {
     return (
     <Container>
-        <LotList/>
+        <LotList approved='1'/>
     </Container>
     );
 };

@@ -1,10 +1,9 @@
 import React from 'react'
-import {Container} from 'react-bootstrap'
-
+import LotList from '../components/LotList';
 function adminPanel() {
     return (
-    <div>
-        amdin
+    <div class="container">
+        <LotList approved='0' />
     </div>
     );
 };

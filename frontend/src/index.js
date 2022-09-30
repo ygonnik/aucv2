@@ -1,14 +1,12 @@
 import React, { createContext } from 'react';
 import ReactDOM from 'react-dom/client';
 import './styles/index.css';
-import Card from './components/LotItem.js';
 import App from './App.js';
 import reportWebVitals from './reportWebVitals';
 import UserStore from './store/UserStore';
 import LotStore from './store/LotStore';
 
 export const Context = createContext(null);
-//const cardsReact = ReactDOM.createRoot(document.getElementById('cardsReact'));
 const app = ReactDOM.createRoot(document.getElementById('app'));
 
 app.render(

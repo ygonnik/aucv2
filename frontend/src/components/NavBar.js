@@ -1,5 +1,5 @@
 import React, {useContext} from 'react'
-import {HOME_ROUTE, ADMIN_ROUTE} from '../utils/consts'
+import {HOME_ROUTE, ADMIN_ROUTE, ADDLOT_ROUTE} from '../utils/consts'
 import {Context} from '../index'
 import {observer} from "mobx-react-lite"
 import {useNavigate} from 'react-router-dom'

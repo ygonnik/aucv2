@@ -3,8 +3,9 @@ import {Routes, Route, Navigate} from 'react-router-dom';
 import {authRoutes, publicRoutes} from '../routes';
 import {HOME_ROUTE} from '../utils/consts';
 import {Context} from '../index'
+import {observer} from "mobx-react-lite";
 
-function AppRouter() {
+const AppRouter = observer(() => {
     const {user} = useContext(Context);
     return (
         <Routes>
@@ -17,6 +18,6 @@ function AppRouter() {
             <Route path="*" element={<Navigate replace to={HOME_ROUTE} />} />
         </Routes>
     );
-};
+});
 
 export default AppRouter;
