@@ -1,12 +1,11 @@
 import React from 'react';
-import {Container} from 'react-bootstrap'
 import LotList from '../components/LotList';
 
 function home() {
     return (
-    <Container>
+    <div class="container">
         <LotList approved='1'/>
-    </Container>
+    </div>
     );
 };
 
