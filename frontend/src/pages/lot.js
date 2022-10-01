@@ -1,10 +1,14 @@
-import React from 'react';
+import React, {useContext}  from 'react';
 import {Container} from 'react-bootstrap'
+import {Context} from '../index'
+import Timer from '../components/Timer';
+import { observable } from 'mobx'
 
-function lotPage() {
+function LotPage() {
   const lot = 
   {id: 1,
-  end_at: '2022-09-29 12:24:28.096+05',
+  end_at: '2022-10-01 20:00:00.096+05',
+  approved: '0',
   body_style: 'Хэтчбек',
   brand: 'Audi',
   model: 'A3',
@@ -23,6 +27,33 @@ function lotPage() {
   img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/2020_Audi_A3_S_Line_Edition_1_35_TD_2.0.jpg/305px-2020_Audi_A3_S_Line_Edition_1_35_TD_2.0.jpg',
   userId: 1}
   const redemption = lot.redemption_price > 0
+  const {user} = useContext(Context);
+  let timerState = observable({
+    timerSeconds: (new Date(Date.parse(lot.end_at) - new Date())).getUTCSeconds(),
+    timerMinutes: (new Date(Date.parse(lot.end_at) - new Date())).getUTCMinutes(),
+    timerHours: (new Date(Date.parse(lot.end_at) - new Date())).getUTCHours()
+  });
+  const timerId = setInterval(function tick() {
+    if (timerState.timerSeconds - 1 < 0) {
+      if (timerState.timerMinutes - 1 < 0) {
+        if (timerState.timerHours - 1 < 0) {
+          clearInterval(timerId)
+        }
+        else {
+          timerState.timerHours -= 1
+          timerState.timerMinutes = 59
+          timerState.timerSeconds = 59
+        }
+      }
+      else {
+        timerState.timerMinutes -= 1
+        timerState.timerSeconds = 59
+      }
+    }
+    else {
+      timerState.timerSeconds -= 1
+    }
+  }, 1000);
     return (
       <Container className = 'mt-3 align-items-center justify-content-center'>
         <div class="row">
@@ -56,6 +87,9 @@ function lotPage() {
             </div>
           </div>
           <div class="col-3 mt-auto">
+            <div class="text-center">
+              До окончания аукциона осталось: <Timer timerState = {timerState} />
+            </div>
             <table class="table table-bordered">
               <tbody>
                 <tr>
@@ -71,16 +105,23 @@ function lotPage() {
                 }
               </tbody>
             </table>
+            { user.isAuth ?
             <div class="input-group mt-2">
               <input type="text" class="form-control" aria-label="Рубли"/>
               <span class="input-group-text">₽</span>
-              <button class="btn btn-outline-secondary" type="button" id="button-addon">Сделать ставку</button>
+              <button class="btn btn-outline-secondary rounded-end" type="button" id="button-addon">Сделать ставку</button>
+              <button class="btn btn-outline-secondary rounded-2 mx-auto mt-2" type="button">Написать продавцу</button>
             </div>
+            :
+            <p>Авторизируйтесь, чтобы сделать ставку или написать продавцу.</p>
+            }
           </div>
         </div>
         <div class="row mt-4">
           <table class="table table-bordered">
             <tbody>
+            <tr>
+              </tr>
               <tr>
                 <th scope="row">Тип кузова</th>
                 <td>{lot.body_style}</td>
@@ -131,9 +172,16 @@ function lotPage() {
               <li class="list-group-item rounded-0 flex-fill">{lot.description}</li>
             </ul>
           </div>
+          { user.isAuth  ? //&& user.role === 'ADMIN'
+          <div class="text-center">
+            <button type="button" class="btn btn-outline-success mx-1 mt-2">Выставить лот</button>
+            <button type="button" class="btn btn-outline-danger mx-1 mt-2">Отклонить заявку</button>
+          </div>
+          : null
+          }
         </div>
       </Container>
     );
 };
 
-export default lotPage;
+export default LotPage;
