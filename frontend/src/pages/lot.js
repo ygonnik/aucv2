@@ -2,12 +2,11 @@ import React, {useContext}  from 'react';
 import {Container} from 'react-bootstrap'
 import {Context} from '../index'
 import Timer from '../components/Timer';
-import { observable } from 'mobx'
 
 function LotPage() {
   const lot = 
   {id: 1,
-  end_at: '2022-10-01 20:00:00.096+05',
+  end_at: '2022-10-02 15:38:00.096+05',
   approved: '0',
   body_style: 'Хэтчбек',
   brand: 'Audi',
@@ -28,32 +27,6 @@ function LotPage() {
   userId: 1}
   const redemption = lot.redemption_price > 0
   const {user} = useContext(Context);
-  let timerState = observable({
-    timerSeconds: (new Date(Date.parse(lot.end_at) - new Date())).getUTCSeconds(),
-    timerMinutes: (new Date(Date.parse(lot.end_at) - new Date())).getUTCMinutes(),
-    timerHours: (new Date(Date.parse(lot.end_at) - new Date())).getUTCHours()
-  });
-  const timerId = setInterval(function tick() {
-    if (timerState.timerSeconds - 1 < 0) {
-      if (timerState.timerMinutes - 1 < 0) {
-        if (timerState.timerHours - 1 < 0) {
-          clearInterval(timerId)
-        }
-        else {
-          timerState.timerHours -= 1
-          timerState.timerMinutes = 59
-          timerState.timerSeconds = 59
-        }
-      }
-      else {
-        timerState.timerMinutes -= 1
-        timerState.timerSeconds = 59
-      }
-    }
-    else {
-      timerState.timerSeconds -= 1
-    }
-  }, 1000);
     return (
       <Container className = 'mt-3 align-items-center justify-content-center'>
         <div class="row">
@@ -88,7 +61,7 @@ function LotPage() {
           </div>
           <div class="col-3 mt-auto">
             <div class="text-center">
-              До окончания аукциона осталось: <Timer timerState = {timerState} />
+              До окончания аукциона осталось: <Timer end_at={lot.end_at} />
             </div>
             <table class="table table-bordered">
               <tbody>
@@ -113,7 +86,7 @@ function LotPage() {
               <button class="btn btn-outline-secondary rounded-2 mx-auto mt-2" type="button">Написать продавцу</button>
             </div>
             :
-            <p>Авторизируйтесь, чтобы сделать ставку или написать продавцу.</p>
+            <p>Авторизуйтесь чтобы сделать ставку или написать продавцу.</p>
             }
           </div>
         </div>
