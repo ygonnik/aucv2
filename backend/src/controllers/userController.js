@@ -2,6 +2,7 @@ const ApiError = require('../../error/ApiError')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const {User} = require('../models/models')
+const { Op } = require("sequelize");
 
 function generateJWT(id, email, nickname, role) {
     return jwt.sign(
@@ -14,7 +15,7 @@ class UserController {
     async registration(req, res, next) {
         const {email, nickname, password, role} = req.body
         if (!email || !nickname || !password) {
-            return next(ApiError.badRequest('Некорректный email or nickname or password'));
+            return next(ApiError.badRequest('Некорректный email или nickname или password'));
         }
         const emailFlag = await User.findOne({where: {email}})
         const nicknameFlag = await User.findOne({where: {nickname}})
@@ -34,8 +35,13 @@ class UserController {
     }
 
     async login(req, res, next) {
-        const {email, password} = req.body
-        const user = await User.findOne({where: {email}})
+        const {emailNickname, password} = req.body
+        const user = await User.findOne({
+                                        [Op.or]: [
+                                        { email: emailNickname },
+                                        { nickname: emailNickname }
+                                        ]
+        })
         if (!user) {
             return next(ApiError.internal('Пользователь не найден'))
         }

@@ -8,7 +8,6 @@ import LotStore from './store/LotStore';
 
 export const Context = createContext(null);
 const app = ReactDOM.createRoot(document.getElementById('app'));
-
 app.render(
   <Context.Provider value={{
     user: new UserStore(),

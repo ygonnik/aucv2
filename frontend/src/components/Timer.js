@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react-lite';
-import { observable} from 'mobx'
+import { observable, action} from 'mobx'
 
 const Timer = observer((props) => {
     const differenceTime = (new Date(Date.parse(props.end_at) - new Date()))
@@ -22,7 +22,7 @@ const Timer = observer((props) => {
         timerState.timerHours = 0
         timerState.timerDays = 0
     }
-    const timerId = setInterval(function tick() {
+    const timerId = setInterval(action(function tick() {
         if (timerState.timerSeconds - 1 < 0) {
             if (timerState.timerMinutes - 1 < 0) {
                 if (timerState.timerHours - 1 < 0) {
@@ -50,7 +50,7 @@ const Timer = observer((props) => {
         else {
         timerState.timerSeconds -= 1
         }
-    }, 1000);
+    }, 1000));
     return (
         <div>
             <p> {timerState.timerDays} дней {timerState.timerHours}:{timerState.timerMinutes}:{timerState.timerSeconds}</p>

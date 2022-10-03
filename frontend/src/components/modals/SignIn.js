@@ -1,12 +1,28 @@
-import React, {useContext} from "react";
+import React, {useContext, useState} from "react";
 import {Context} from '../../index'
 import {useNavigate} from 'react-router-dom'
-import {ADMIN_ROUTE, SIGNUP_ROUTE, ADDLOT_ROUTE} from '../../utils/consts'
+import {ADMIN_ROUTE, SIGNUP_ROUTE, ADDLOT_ROUTE, HOME_ROUTE} from '../../utils/consts'
 import {observer} from "mobx-react-lite"
+import {login} from '../../http/userAPI'
 
 const SignIn = observer(() => {
     const {user} = useContext(Context);
     const navigate = useNavigate()
+    const [emailNickname, setEmailNickname] = useState('')
+    const [password, setPassword] = useState('')
+
+    const clickLogin = async () => {
+        try {
+            let dataUser
+            dataUser = await login(emailNickname, password)
+            user.setUser(dataUser)
+            user.setIsAuth(true)
+            navigate(HOME_ROUTE)
+        }
+        catch (e) {
+            alert(e.response.dataUser.message)
+        }
+    }
         return (
             <div>
                 {user.isAuth ?
@@ -42,14 +58,18 @@ const SignIn = observer(() => {
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <input type="text" class="form-control mb-3" placeholder="Логин" aria-label="Username"/>
-                                <input type="text" class="form-control mb-3" placeholder="Пароль" aria-label="Password"/>
+                                <input type="text" class="form-control mb-3" placeholder="Электронная почта или никнейм" aria-label="Username"
+                                value={emailNickname}
+                                onChange={e => setEmailNickname(e.target.value)}/>
+                                <input type="text" class="form-control mb-3" placeholder="Пароль" aria-label="Password"
+                                value={password}
+                                onChange={e => setPassword(e.target.value)}/>
                                 <div class="d-flex justify-content-center">
-                                    <button type="button" class="btn btn-outline-info btn-sm" onClick={() => navigate(SIGNUP_ROUTE)}>Регистрация</button>
+                                    <button type="button" class="btn btn-outline-info btn-sm" data-bs-dismiss="modal" onClick={() => navigate(SIGNUP_ROUTE)}>Регистрация</button>
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onClick={() => user.setIsAuth(true)}>Войти</button>
+                                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onClick={clickLogin}>Войти</button>
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отменить</button>
                             </div>
                         </div>

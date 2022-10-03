@@ -17,7 +17,7 @@ const Message = sequelize.define('message', {
 const Lot = sequelize.define('lot', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
     end_at: {type: DataTypes.DATE, allowNull: false},
-    approved: {type: DataTypes.TINYINT, allowNull: false, defaultValue: 0},
+    approved: {type: DataTypes.INTEGER, allowNull: false, defaultValue: 0},
     body_style: {type: DataTypes.STRING, allowNull: false},
     brand: {type: DataTypes.STRING, allowNull: false},
     model: {type: DataTypes.STRING, allowNull: false},
