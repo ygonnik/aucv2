@@ -6,7 +6,6 @@ import LotItem from './LotItem'
 const LotList = observer((props) => {
     const {lot} = useContext(Context);
     const displayedLots = lot.lots.filter( lot => lot.approved === props.approved);
-    console.log(Boolean(props.approved))
     return (
         <div class="album py-5 bg-light">
             <div class="container">

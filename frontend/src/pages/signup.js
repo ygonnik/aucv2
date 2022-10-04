@@ -21,7 +21,6 @@ const Signup = observer(() => {
             user.setUser(dataUser)
             user.setIsAuth(true)
             navigate(HOME_ROUTE)
-            console.log('done')
         }
         catch (e) {
             alert(e.response.dataUser.message)
