@@ -33,7 +33,7 @@ const Lot = sequelize.define('lot', {
     start_price: {type: DataTypes.INTEGER, allowNull: false},
     redemption_price: {type: DataTypes.INTEGER, allowNull: true},
     city: {type: DataTypes.STRING, allowNull: false},
-    img: {type: DataTypes.STRING, allowNull: true},
+    img: {type: DataTypes.TEXT, allowNull: true},
 })
 
 const Bid = sequelize.define('bid', {

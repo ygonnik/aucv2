@@ -14,8 +14,8 @@ const App = observer(() => {
       check().then(data => {
         user.setUser(true)
         user.setIsAuth(true)
-        console.log('authtrue')
       }).finally(() => setLoading(false))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     if (loading) {

@@ -23,7 +23,7 @@ function LotPage() {
   start_price: 30000,
   redemption_price: 200000,
   city: 'Тюмень',
-  img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/2020_Audi_A3_S_Line_Edition_1_35_TD_2.0.jpg/305px-2020_Audi_A3_S_Line_Edition_1_35_TD_2.0.jpg',
+  img: '/lot1',
   userId: 1}
   const redemption = lot.redemption_price > 0
   const {user} = useContext(Context);
@@ -38,17 +38,12 @@ function LotPage() {
                 <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
                 <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
               </div>
-              <div class="carousel-inner">
-                <div class="carousel-item active" data-bs-interval="10000">
-                  <img src={lot.img} class="d-block w-100" alt="..."/>
-                </div>
-                <div class="carousel-item" data-bs-interval="2000">
-                  <img src={lot.img} class="d-block w-100" alt="..."/>
-                </div>
-                <div class="carousel-item">
-                  <img src={lot.img} class="d-block w-100" alt="..."/>
-                </div>
-              </div>
+              {/* <div class="carousel-inner">
+                {imgs.map( img =>
+                  <div class="carousel-item" data-bs-interval="10000">
+                    <img src={process.env.REACT_APP_API_URL + img} class="d-block w-100" alt="..."/>
+                  </div>)}
+              </div> */}
               <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Previous</span>

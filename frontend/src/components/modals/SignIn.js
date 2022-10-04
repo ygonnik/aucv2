@@ -15,7 +15,6 @@ const SignIn = observer(() => {
         user.setUser({})
         user.setIsAuth(false)
         localStorage.removeItem('token')
-        console.log('authfalse')
     }
 
     const clickLogin = async () => {
@@ -24,7 +23,6 @@ const SignIn = observer(() => {
             dataUser = await login(emailNickname, password)
             user.setUser(dataUser)
             user.setIsAuth(true)
-            console.log('authtrue')
             navigate(HOME_ROUTE)
         }
         catch (e) {

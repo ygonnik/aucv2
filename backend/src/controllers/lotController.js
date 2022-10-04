@@ -9,9 +9,12 @@ class LotController {
                 mileage, fuel, drivetrain, transmission, color, steering_wheel,
                 description, start_price, current_price, redemption_price, city} = req.body
             const {img} = req.files
-            let fileName = uuid.v4() + ".jpg"
-            img.mv(path.resolve(__dirname, '..', 'static', fileName))
-    
+            
+            let fileName
+            for(let item of img){
+                fileName = uuid.v4() + ".jpg "
+                item.mv(path.resolve(__dirname, '..', 'static', fileName))
+            }
             const lot = await Lot.create({end_at, body_style, brand, model, engine_volume, power,
                 mileage, fuel, drivetrain, transmission, color, steering_wheel,
                 description, start_price, current_price, redemption_price, city, img:fileName})
@@ -27,8 +30,8 @@ class LotController {
         page = page || 1
         limit = limit || 9
         offset = page * limit - limit
-        const bids = await Lot.findAndCountAll({limit, offset})
-        return res.json(bids)
+        const lots = await Lot.findAndCountAll({limit, offset})
+        return res.json(lots)
     }
 
     async getOne(req, res) {
