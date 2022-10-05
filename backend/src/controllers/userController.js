@@ -37,10 +37,12 @@ class UserController {
     async login(req, res, next) {
         const {emailNickname, password} = req.body
         const user = await User.findOne({
+                                    where: {
                                         [Op.or]: [
                                         { email: emailNickname },
                                         { nickname: emailNickname }
                                         ]
+                                    }
         })
         if (!user) {
             return next(ApiError.internal('Пользователь не найден'))

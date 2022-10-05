@@ -23,7 +23,7 @@ const Signup = observer(() => {
             navigate(HOME_ROUTE)
         }
         catch (e) {
-            alert(e.response.dataUser.message)
+            alert(e.response.data.message)
         }
     }
     return (
@@ -58,13 +58,16 @@ const Signup = observer(() => {
                     <label for="floatingPassword">Повторите пароль</label>
                 </div>
                 { (password !== repeatPassword) ?
-                <div class="text-center text-danger">
-                    <p>Введенные пароли не совпадают</p>
-                    
+                <div>
+                    <div class="text-center text-danger">
+                        <p>Введенные пароли не совпадают</p>
+                    </div>
+                    <button class="w-100 btn btn-lg btn-primary" type="submit" id="registerButton" onClick={clickRegister} disabled>Зарегистрироваться</button>
                 </div>
-                : null
-                }
+                :
                 <button class="w-100 btn btn-lg btn-primary" type="submit" id="registerButton" onClick={clickRegister}>Зарегистрироваться</button>
+                }
+                
                 <p class="mt-5 mb-3 text-muted text-center">&copy; 2022</p>
             </form>
         </main>

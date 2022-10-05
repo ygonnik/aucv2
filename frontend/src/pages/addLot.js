@@ -1,104 +1,154 @@
-import React from 'react'
+import React, {useContext, useState} from 'react'
+import {observer} from "mobx-react-lite";
+import {Context} from "../index";
+import {useNavigate} from 'react-router-dom'
+import { createLot } from '../http/lotAPI';
+import { HOME_ROUTE } from '../utils/consts';
 
-function addLot() {
+const AddLot = observer(() => {
+    const navigate = useNavigate()
+
+    const {lot} = useContext(Context)
+    const {user} = useContext(Context)
+    const [end_at, setEnd_at] = useState('')
+    const [body_style, setBody_style] = useState('')
+    const [brand, setBrand] = useState('')
+    const [model, setModel] = useState('')
+    const [engine_volume, setEngine_volume] = useState('')
+    const [power, setPower] = useState('')
+    const [mileage, setMileage] = useState('')
+    const [fuel, setFuel] = useState('')
+    const [drivetrain, setDrivetrain] = useState('')
+    const [transmission, setTransmission] = useState('')
+    const [color, setColor] = useState('')
+    const [steering_wheel, setSteering_wheel] = useState('')
+    const [description, setDescription] = useState('')
+    const [start_price, setStart_price] = useState('')
+    const [redemption_price, setRedemption_price] = useState('')
+    const [city, setCity] = useState('')
+    const [img, setImg] = useState('')
+
+    const addLot = () => {
+        const formData = new FormData()
+        formData.append('end_at', end_at)
+        formData.append('body_style', body_style)
+        formData.append('brand', brand)
+        formData.append('model', model)
+        formData.append('engine_volume', engine_volume)
+        formData.append('power', power)
+        formData.append('mileage', mileage)
+        formData.append('fuel', fuel)
+        formData.append('drivetrain', drivetrain)
+        formData.append('transmission', transmission)
+        formData.append('color', color)
+        formData.append('steering_wheel', steering_wheel)
+        formData.append('description', description)
+        formData.append('start_price', start_price)
+        formData.append('redemption_price', redemption_price)
+        formData.append('city', city)
+        formData.append('img', img)
+        formData.append('userId', user.user.id)
+        createLot(formData)
+        navigate(HOME_ROUTE)
+    }
     return (
     <div class="container">
         <main class="form-signin m-auto d-flex-inline w-50 justify-content-center">
             <form>
                 <h1 class="h3 mb-3 mt-4 fw-normal text-center">Создание лота</h1>
 
-                <select class="form-select form-select-md mb-1 rounded-0 py-3">
+                <select class="form-select form-select-md mb-1 rounded-0 py-3" onChange={e => setBody_style(e.target.value)}>
                     <option selected>Тип кузова</option>
-                    <option value="1">Седан</option>
-                    <option value="2">Хэтчбек</option>
-                    <option value="3">Внедорожник</option>
-                    <option value="4">Универсал</option>
-                    <option value="5">Купэ</option>
-                    <option value="6">Минивэн</option>
-                    <option value="7">Пикап</option>
-                    <option value="8">Кабриолет</option>
+                    <option value="Седан">Седан</option>
+                    <option value="Хэтчбек">Хэтчбек</option>
+                    <option value="Внедорожник">Внедорожник</option>
+                    <option value="Универсал">Универсал</option>
+                    <option value="Купэ">Купэ</option>
+                    <option value="Минивэн">Минивэн</option>
+                    <option value="Пикап">Пикап</option>
+                    <option value="Кабриолет">Кабриолет</option>
                 </select>
                 <div class="form-floating mb-1">
-                    <input type="text" class="form-control rounded-0" placeholder=" "/>
+                    <input type="text" class="form-control rounded-0" placeholder=" " onChange={e => setBrand(e.target.value)}/>
                     <label for="floatingInput">Марка</label>
                 </div>
                 <div class="form-floating mb-1">
-                    <input type="text" class="form-control rounded-0" placeholder=" "/>
+                    <input type="text" class="form-control rounded-0" placeholder=" " onChange={e => setModel(e.target.value)}/>
                     <label for="floatingInput">Модель</label>
                 </div>
                 <div class="form-floating mb-1">
-                    <input type="number" class="form-control rounded-0" placeholder=" "/>
+                    <input type="number" class="form-control rounded-0" placeholder=" " onChange={e => setEngine_volume(e.target.value)}/>
                     <label for="floatingInput">Объем двигателя в см</label>
                 </div>
                 <div class="form-floating mb-1">
-                    <input type="number" class="form-control rounded-0" placeholder=" "/>
+                    <input type="number" class="form-control rounded-0" placeholder=" " onChange={e => setPower(e.target.value)}/>
                     <label for="floatingInput">Мощность в л.с.</label>
                 </div>
                 <div class="form-floating mb-1">
-                    <input type="number" class="form-control rounded-0" placeholder=" "/>
+                    <input type="number" class="form-control rounded-0" placeholder=" " onChange={e => setMileage(e.target.value)}/>
                     <label for="floatingInput">Пробег</label>
                 </div>
-                <select class="form-select form-select-md mb-1 rounded-0 py-3">
+                <select class="form-select form-select-md mb-1 rounded-0 py-3" onChange={e => setFuel(e.target.value)}>
                     <option selected>Топливо</option>
-                    <option value="1">Бензин</option>
-                    <option value="2">Дизель</option>
-                    <option value="3">Гибрид</option>
-                    <option value="4">Электро</option>
+                    <option value="Бензин">Бензин</option>
+                    <option value="Дизель">Дизель</option>
+                    <option value="Гибрид">Гибрид</option>
+                    <option value="Электро">Электро</option>
                 </select>
-                <select class="form-select form-select-md mb-1 rounded-0 py-3">
+                <select class="form-select form-select-md mb-1 rounded-0 py-3" onChange={e => setDrivetrain(e.target.value)}>
                     <option selected>Привод</option>
-                    <option value="1">Передний</option>
-                    <option value="2">Задний</option>
-                    <option value="3">Полный</option>
+                    <option value="Передний">Передний</option>
+                    <option value="Задний">Задний</option>
+                    <option value="Полный">Полный</option>
                 </select>
-                <select class="form-select form-select-md mb-1 rounded-0 py-3">
+                <select class="form-select form-select-md mb-1 rounded-0 py-3" onChange={e => setTransmission(e.target.value)}>
                     <option selected>Трансмиссия</option>
-                    <option value="1">Автоматическая</option>
-                    <option value="2">Механическая</option>
+                    <option value="Автоматическая">Автоматическая</option>
+                    <option value="Механическая">Механическая</option>
                 </select>
                 <div class="form-floating mb-1">
-                    <input type="text" class="form-control rounded-0" placeholder=" "/>
+                    <input type="text" class="form-control rounded-0" placeholder=" " onChange={e => setColor(e.target.value)}/>
                     <label for="floatingInput">Цвет</label>
                 </div>
-                <select class="form-select form-select-md mb-1 rounded-0 py-3">
+                <select class="form-select form-select-md mb-1 rounded-0 py-3" onChange={e => setSteering_wheel(e.target.value)}>
                     <option selected>Руль</option>
-                    <option value="1">Левый</option>
-                    <option value="2">Правый</option>
+                    <option value="Левый">Левый</option>
+                    <option value="Правый">Правый</option>
                 </select>
                 <div class="form-floating mb-1">
-                    <input type="number" class="form-control rounded-0" placeholder=" " step="1000"/>
+                    <input type="number" class="form-control rounded-0" placeholder=" " step="1000" onChange={e => setStart_price(e.target.value)}/>
                     <label for="floatingInput">Начальная стоимость</label>
                 </div>
                 <div class="form-floating mb-1">
-                    <input type="number" class="form-control rounded-0" placeholder=" " step="1000"/>
+                    <input type="number" class="form-control rounded-0" placeholder=" " step="1000" onChange={e => setRedemption_price(e.target.value)}/>
                     <label for="floatingInput">Цена выкупа</label>
                 </div>
                 <div class="form-floating mb-2">
-                    <input type="text" class="form-control rounded-0" placeholder=" "/>
+                    <input type="text" class="form-control rounded-0" placeholder=" " onChange={e => setCity(e.target.value)}/>
                     <label for="floatingInput">Город</label>
                 </div>
-                <select class="form-select form-select-md mb-1 rounded-0 py-3">
+                <select class="form-select form-select-md mb-1 rounded-0 py-3" onChange={e => setEnd_at(e.target.value)}>
                     <option selected>Длительность аукциона</option>
-                    <option value="1">3 д.</option>
-                    <option value="2">7 д.</option>
-                    <option value="1">14 д.</option>
+                    <option value="3">3 д.</option>
+                    <option value="7">7 д.</option>
+                    <option value="14">14 д.</option>
                 </select>
                 <div class="mb-2">
                     <label for="formFileMultiple" class="form-label">Загрузить фото</label>
-                    <input class="form-control" type="file" id="formFileMultiple" multiple/>
+                    <input class="form-control" type="file" id="formFileMultiple" onChange={e => setImg(e.target.value)} multiple />
                 </div>
                 <div class="mb-3">
-                    <label for="exampleFormControlTextarea1" class="form-label">Описание</label>
+                    <label for="exampleFormControlTextarea1" class="form-label" onChange={e => setDescription(e.target.value)}>Описание</label>
                     <textarea class="form-control"  rows="3"></textarea>
                 </div>
 
 
-                <button class="w-100 btn btn-lg btn-primary" type="submit">Создать лот</button>
+                <button class="w-100 btn btn-lg btn-primary" type="submit" onClick={addLot()}>Создать лот</button>
                 <p class="mt-5 mb-3 text-muted text-center">&copy; 2017–2022</p>
             </form>
         </main>
     </div>
     );
-};
+});
 
-export default addLot;
+export default AddLot;

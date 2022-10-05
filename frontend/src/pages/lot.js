@@ -1,5 +1,4 @@
 import React, {useContext}  from 'react';
-import {Container} from 'react-bootstrap'
 import {Context} from '../index'
 import Timer from '../components/Timer';
 
@@ -28,7 +27,7 @@ function LotPage() {
   const redemption = lot.redemption_price > 0
   const {user} = useContext(Context);
     return (
-      <Container className = 'mt-3 align-items-center justify-content-center'>
+      <div class = 'container mt-3 align-items-center justify-content-center'>
         <div class="row">
           <div class="col-9">
           <h2>{lot.brand + ' ' + lot.model}</h2>
@@ -148,7 +147,7 @@ function LotPage() {
           : null
           }
         </div>
-      </Container>
+      </div>
     );
 };
 

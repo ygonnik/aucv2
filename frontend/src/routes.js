@@ -1,9 +1,9 @@
 import {ADMIN_ROUTE, LOT_ROUTE, SIGNUP_ROUTE, HOME_ROUTE, ADDLOT_ROUTE} from './utils/consts';
 import adminPanel from './pages/adminPanel';
-import home from './pages/home';
+import Home from './pages/home';
 import lot from './pages/lot';
 import signup from './pages/signup';
-import addLot from './pages/addLot';
+import AddLot from './pages/addLot';
 
 export const authRoutes = [
     {
@@ -12,7 +12,7 @@ export const authRoutes = [
     },
     {
         path: ADDLOT_ROUTE,
-        Component : addLot
+        Component : AddLot
     }
 ]
 
@@ -27,6 +27,6 @@ export const publicRoutes = [
     },
     {
         path: HOME_ROUTE,
-        Component : home
+        Component : Home
     }
 ]

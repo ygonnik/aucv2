@@ -26,7 +26,7 @@ const SignIn = observer(() => {
             navigate(HOME_ROUTE)
         }
         catch (e) {
-            alert(e.response.dataUser.message)
+            alert(e.response.data.message)
         }
     }
         return (
