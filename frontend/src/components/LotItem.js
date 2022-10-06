@@ -5,10 +5,11 @@ import Timer from "./Timer";
 
 const LotItem = ({lot}) =>{
     const navigate = useNavigate()
+    const lotFirstImg = process.env.REACT_APP_API_URL + lot.img.split(' ')[0]
         return (
         <div class="col" style={{cursor: 'pointer'}} onClick={() => navigate(LOT_ROUTE + '/' + lot.id)}>
             <div class="card shadow-sm">
-            <img src={lot.img} class="card-img-top"  alt=''/>
+            <img src={lotFirstImg} class="card-img-top"  alt=''/>
                 <div class="card-body">
                     <Timer end_at={lot.end_at}/>
                     <h5 class="card-title">{lot.brand + ' ' + lot.model}</h5>

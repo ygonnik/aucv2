@@ -5,7 +5,12 @@ import LotItem from './LotItem'
 
 const LotList = observer((props) => {
     const {lot} = useContext(Context);
-    const displayedLots = lot.lots.filter( lot => lot.approved === props.approved);
+    const displayedLots =  [] 
+    for (let item in lot.lots) {
+        if (lot.lots[item].approved.toString() === props.approved) {
+            displayedLots.push(lot.lots[item])
+        }
+    }
     return (
         <div class="album py-5 bg-light">
             <div class="container">

@@ -7,17 +7,19 @@ class LotController {
         try {
             const {end_at, body_style, brand, model, engine_volume, power,
                 mileage, fuel, drivetrain, transmission, color, steering_wheel,
-                description, start_price, current_price, redemption_price, city} = req.body
+                description, start_price, current_price, redemption_price, city, userId} = req.body
             const {img} = req.files
             
             let fileName
+            let result = ''
             for(let item of img){
-                fileName = uuid.v4() + ".jpg "
-                item.mv(path.resolve(__dirname, '..', 'static', fileName))
+                fileName = uuid.v4() + ".jpg"
+                item.mv(path.resolve(__dirname, '..', '..', 'static', fileName))
+                result += fileName + ' '
             }
             const lot = await Lot.create({end_at, body_style, brand, model, engine_volume, power,
                 mileage, fuel, drivetrain, transmission, color, steering_wheel,
-                description, start_price, current_price, redemption_price, city, img:fileName})
+                description, start_price, current_price, redemption_price, city, img:result, userId})
             return res.json(lot)
         }
         catch(err) {
@@ -26,10 +28,10 @@ class LotController {
     }
 
     async getAll(req, res) {
-        const {limit, page} = req.query
+        let {limit, page} = req.query
         page = page || 1
         limit = limit || 9
-        offset = page * limit - limit
+        let offset = page * limit - limit
         const lots = await Lot.findAndCountAll({limit, offset})
         return res.json(lots)
     }

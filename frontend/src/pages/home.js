@@ -7,7 +7,7 @@ function Home() {
     const {lot} = useContext(Context)
 
     useEffect(() => {
-        fetchLots().then(data => lot.setLots(data))
+        fetchLots().then(data => lot.setLots(data.rows))
     // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
     return (

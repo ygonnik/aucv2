@@ -1,31 +1,27 @@
-import React, {useContext}  from 'react';
+import React, {useContext, useState, useEffect}  from 'react';
 import {Context} from '../index'
 import Timer from '../components/Timer';
+import {useParams} from 'react-router-dom'
+import { fetchOneLot } from '../http/lotAPI';
 
 function LotPage() {
-  const lot = 
-  {id: 1,
-  end_at: '2022-10-02 15:38:00.096+05',
-  approved: '0',
-  body_style: 'Хэтчбек',
-  brand: 'Audi',
-  model: 'A3',
-  engine_volume: 2100,
-  power: 120,
-  mileage: 65444,
-  fuel: 'Бензин',
-  drivetrain: 'Передний',
-  transmission: 'Механическая',
-  color: 'Красный',
-  steering_wheel: 'Правый',
-  description: 'Не бита, не крашена.',
-  start_price: 30000,
-  redemption_price: 200000,
-  city: 'Тюмень',
-  img: '/lot1',
-  userId: 1}
-  const redemption = lot.redemption_price > 0
   const {user} = useContext(Context);
+  const [lot, setLot] = useState({})
+  const [imgs, setImgs] = useState([])
+  const {id} = useParams()
+
+  const Set = (data) => {
+    let imgs = data.img.split(' ')
+    imgs.pop()
+    setImgs(imgs)
+    setLot(data)
+  }
+  useEffect(() => {
+    fetchOneLot(id)
+    .then(data => Set(data))
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[])
+  const redemption = lot.redemption_price > 0
     return (
       <div class = 'container mt-3 align-items-center justify-content-center'>
         <div class="row">
@@ -37,12 +33,16 @@ function LotPage() {
                 <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
                 <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
               </div>
-              {/* <div class="carousel-inner">
-                {imgs.map( img =>
-                  <div class="carousel-item" data-bs-interval="10000">
+              <div class="carousel-inner" id="carousel-imgs">
+                <div class="carousel-item active" data-bs-interval="10000" > 
+                  <img src={process.env.REACT_APP_API_URL + imgs.shift()} class="d-block w-100" alt="..."/>
+                </div>
+                {imgs.map( img => 
+                  <div class="carousel-item" data-bs-interval="10000" key={img}> 
                     <img src={process.env.REACT_APP_API_URL + img} class="d-block w-100" alt="..."/>
-                  </div>)}
-              </div> */}
+                  </div>)
+                }
+              </div>
               <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Previous</span>
