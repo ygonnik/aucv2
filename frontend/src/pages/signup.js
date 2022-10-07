@@ -1,5 +1,4 @@
 import React, {useState, useContext} from 'react';
-import {Container} from 'react-bootstrap'
 import {Context} from '../index';
 import {registration} from '../http/userAPI'
 import {useNavigate} from 'react-router-dom'
@@ -27,7 +26,7 @@ const Signup = observer(() => {
         }
     }
     return (
-    <Container>
+    <div class="container">
         <main class="form-signin m-auto d-flex-inline w-50 justify-content-center">
             <form>
                 <h1 class="h3 mb-3 mt-4 fw-normal text-center">Регистрация</h1>
@@ -71,7 +70,7 @@ const Signup = observer(() => {
                 <p class="mt-5 mb-3 text-muted text-center">&copy; 2022</p>
             </form>
         </main>
-    </Container>
+    </div>
     );
 });
 

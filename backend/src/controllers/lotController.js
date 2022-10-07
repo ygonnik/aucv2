@@ -8,11 +8,15 @@ class LotController {
             const {end_at, body_style, brand, model, engine_volume, power,
                 mileage, fuel, drivetrain, transmission, color, steering_wheel,
                 description, start_price, current_price, redemption_price, city, userId} = req.body
-            const {img} = req.files
+            var files = [];
+            var fileKeys = Object.keys(req.files);
             
+            fileKeys.forEach(function(key) {
+                files.push(req.files[key]);
+            });
             let fileName
             let result = ''
-            for(let item of img){
+            for(let item of files){
                 fileName = uuid.v4() + ".jpg"
                 item.mv(path.resolve(__dirname, '..', '..', 'static', fileName))
                 result += fileName + ' '
