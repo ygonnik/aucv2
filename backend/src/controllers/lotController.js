@@ -31,6 +31,22 @@ class LotController {
         }
     }
 
+    async changeApproved(req, res) {
+        try {
+            const {id} = req.params
+            const {approved} = req.body
+            console.log(id)
+            console.log(approved)
+            const lot = await Lot.findOne({where: {id}})
+            lot.approved = approved
+            await lot.save()
+            return res.json(lot)
+        }
+        catch(err) {
+            next(ApiError.badRequest(err.message))
+        }
+    }
+
     async getAll(req, res) {
         let {limit, page} = req.query
         page = page || 1

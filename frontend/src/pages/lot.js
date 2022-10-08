@@ -2,10 +2,13 @@ import React, {useContext, useState, useEffect}  from 'react';
 import {Context} from '../index'
 import Timer from '../components/Timer';
 import {useParams} from 'react-router-dom'
-import { fetchOneLot } from '../http/lotAPI';
+import { fetchOneLot, changeApproveLot } from '../http/lotAPI';
+import {useNavigate} from 'react-router-dom'
+import { ADMIN_ROUTE } from '../utils/consts';
 
 function LotPage() {
   const {user} = useContext(Context);
+  const navigate = useNavigate()
   const [lot, setLot] = useState({})
   const [imgs, setImgs] = useState([])
   const {id} = useParams()
@@ -15,6 +18,14 @@ function LotPage() {
     imgs.pop()
     setImgs(imgs)
     setLot(data)
+  }
+  const approve = () => {
+    changeApproveLot(id, "1")
+    navigate(ADMIN_ROUTE)
+  }
+  const decline = () => {
+    changeApproveLot(id, "2")
+    navigate(ADMIN_ROUTE)
   }
   useEffect(() => {
     fetchOneLot(id)
@@ -139,10 +150,11 @@ function LotPage() {
               <li class="list-group-item rounded-0 flex-fill">{lot.description}</li>
             </ul>
           </div>
-          { user.isAuth  ? //&& user.role === 'ADMIN'
+          { user.isAuth && user.user.role === 'ADMIN'
+          ? 
           <div class="text-center">
-            <button type="button" class="btn btn-outline-success mx-1 mt-2">Выставить лот</button>
-            <button type="button" class="btn btn-outline-danger mx-1 mt-2">Отклонить заявку</button>
+            <button type="button" class="btn btn-outline-success mx-1 mt-2" onClick={approve}>Выставить лот</button>
+            <button type="button" class="btn btn-outline-danger mx-1 mt-2" onClick={decline}>Отклонить заявку</button>
           </div>
           : null
           }

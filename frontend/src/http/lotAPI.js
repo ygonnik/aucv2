@@ -5,6 +5,11 @@ export const createLot = async (lot) => {
     return data
 }
 
+export const changeApproveLot = async (id, approved) => {
+    const {data} = await $authHost.patch('api/lot/' + id, {approved: approved})
+    return data
+}
+
 export const fetchLots = async () => {
     const {data} = await $host.get('api/lot')
     return data
