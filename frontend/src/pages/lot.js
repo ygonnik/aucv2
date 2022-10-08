@@ -5,19 +5,32 @@ import {useParams} from 'react-router-dom'
 import { fetchOneLot, changeApproveLot } from '../http/lotAPI';
 import {useNavigate} from 'react-router-dom'
 import { ADMIN_ROUTE } from '../utils/consts';
+import { fetchBidsByLotId, createBid } from '../http/bidAPI';
 
 function LotPage() {
   const {user} = useContext(Context);
   const navigate = useNavigate()
-  const [lot, setLot] = useState({})
+  const [lotItem, setLotItem] = useState({})
   const [imgs, setImgs] = useState([])
+  const [firstImg, setFirstImg] = useState(null)
+  const [highestBid, setHighestBid] = useState(0)
+  const [price, setPrice] = useState(0)
   const {id} = useParams()
 
-  const Set = (data) => {
+  const SetLot = (data) => {
     let imgs = data.img.split(' ')
     imgs.pop()
+    setFirstImg(imgs.shift())
     setImgs(imgs)
-    setLot(data)
+    setLotItem(data)
+  }
+  const SetBid = (data) => {
+    if (data.length !== 0) {
+      setHighestBid(data.sort()[data.length - 1])
+    }
+  }
+  const clickCreateBid = () => {
+    createBid(user.user.id, id, price)
   }
   const approve = () => {
     changeApproveLot(id, "1")
@@ -28,16 +41,16 @@ function LotPage() {
     navigate(ADMIN_ROUTE)
   }
   useEffect(() => {
-    fetchOneLot(id)
-    .then(data => Set(data))
+    fetchOneLot(id).then(data => SetLot(data))
+    fetchBidsByLotId(id).then(data => SetBid(data));
   // eslint-disable-next-line react-hooks/exhaustive-deps
   },[])
-  const redemption = lot.redemption_price > 0
+  const redemption = lotItem.redemption_price > 0
     return (
       <div class = 'container mt-3 align-items-center justify-content-center'>
         <div class="row">
           <div class="col-9">
-          <h2>{lot.brand + ' ' + lot.model}</h2>
+          <h2>{lotItem.brand + ' ' + lotItem.model}</h2>
           <div id="carouselExampleDark" class="carousel slide" data-bs-ride="carousel">
               <div class="carousel-indicators">
                 <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -46,7 +59,7 @@ function LotPage() {
               </div>
               <div class="carousel-inner" id="carousel-imgs">
                 <div class="carousel-item active" data-bs-interval="10000" > 
-                  <img src={process.env.REACT_APP_API_URL + imgs.shift()} class="d-block w-100" alt="..."/>
+                  <img src={process.env.REACT_APP_API_URL + firstImg} class="d-block w-100" alt="..."/>
                 </div>
                 {imgs.map( img => 
                   <div class="carousel-item" data-bs-interval="10000" key={img}> 
@@ -66,18 +79,28 @@ function LotPage() {
           </div>
           <div class="col-3 mt-auto">
             <div class="text-center">
-              До окончания аукциона осталось: <Timer end_at={lot.end_at} />
+              До окончания аукциона осталось: <Timer end_at={lotItem.end_at} />
             </div>
             <table class="table table-bordered">
               <tbody>
                 <tr>
                   <th scope="row">Начальная цена</th>
-                  <td>{lot.start_price}</td>
+                  <td>{lotItem.start_price}</td>
+                </tr>
+                <tr>
+                  <th scope="row">Последняя ставка</th>
+                  { highestBid > 0
+                  ?
+                    <td>{highestBid}</td>
+                  :
+                    <td>Ставок нет</td>
+                  }
+                  
                 </tr>
                 { redemption ?
                 <tr>
                   <th scope="row">Цена выкупа</th>
-                  <td>{lot.redemption_price}</td>
+                  <td>{lotItem.redemption_price}</td>
                 </tr>
                 : null
                 }
@@ -85,9 +108,9 @@ function LotPage() {
             </table>
             { user.isAuth ?
             <div class="input-group mt-2">
-              <input type="text" class="form-control" aria-label="Рубли"/>
+              <input type="text" class="form-control" aria-label="Рубли" value={price} onChange={e => setPrice(e.target.value)}/>
               <span class="input-group-text">₽</span>
-              <button class="btn btn-outline-secondary rounded-end" type="button" id="button-addon">Сделать ставку</button>
+              <button class="btn btn-outline-secondary rounded-end" type="button" id="button-addon" onClick={clickCreateBid}>Сделать ставку</button>
               <button class="btn btn-outline-secondary rounded-2 mx-auto mt-2" type="button">Написать продавцу</button>
             </div>
             :
@@ -102,43 +125,43 @@ function LotPage() {
               </tr>
               <tr>
                 <th scope="row">Тип кузова</th>
-                <td>{lot.body_style}</td>
+                <td>{lotItem.body_style}</td>
               </tr>
               <tr>
                 <th scope="row">Объем двигателя</th>
-                <td>{lot.engine_volume / 1000} л.</td>
+                <td>{lotItem.engine_volume / 1000} л.</td>
               </tr>
               <tr>
                 <th scope="row">Мощность</th>
-                <td>{lot.power} л.с.</td>
+                <td>{lotItem.power} л.с.</td>
               </tr>
               <tr>
                 <th scope="row">Пробег</th>
-                <td>{lot.mileage} км.</td>
+                <td>{lotItem.mileage} км.</td>
               </tr>
               <tr>
                 <th scope="row">Топливо</th>
-                <td>{lot.fuel}</td>
+                <td>{lotItem.fuel}</td>
               </tr>
               <tr>
                 <th scope="row">Привод</th>
-                <td>{lot.drivetrain}</td>
+                <td>{lotItem.drivetrain}</td>
               </tr>
               <tr>
                 <th scope="row">Трансмиссия</th>
-                <td>{lot.transmission}</td>
+                <td>{lotItem.transmission}</td>
               </tr>
               <tr>
                 <th scope="row">Цвет</th>
-                <td>{lot.color}</td>
+                <td>{lotItem.color}</td>
               </tr>
               <tr>
                 <th scope="row">Рулевое колесо</th>
-                <td>{lot.steering_wheel}</td>
+                <td>{lotItem.steering_wheel}</td>
               </tr>
               <tr>
                 <th scope="row">Город</th>
-                <td>{lot.city}</td>
+                <td>{lotItem.city}</td>
               </tr>
             </tbody>
           </table>
@@ -147,7 +170,7 @@ function LotPage() {
               <li class="list-group-item rounded-0 fw-bold border border-bottom-0">Описание</li>
             </ul>
             <ul class="list-group list-group-horizontal">
-              <li class="list-group-item rounded-0 flex-fill">{lot.description}</li>
+              <li class="list-group-item rounded-0 flex-fill">{lotItem.description}</li>
             </ul>
           </div>
           { user.isAuth && user.user.role === 'ADMIN'

@@ -7,9 +7,15 @@ class BidController {
         return res.json(bid)
     }
 
-    async getAll(req, res) {
+    async getAllByUserID(req, res) {
         const {userId} = req.params
         const bids = await Bid.findAll({where: {userId}})
+        return res.json(bids)
+    }
+
+    async getAllByLotID(req, res) {
+        const {lotId} = req.params
+        const bids = await Bid.findAll({where: {lotId}})
         return res.json(bids)
     }
 }

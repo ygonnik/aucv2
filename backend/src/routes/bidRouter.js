@@ -3,6 +3,7 @@ const router = new Router();
 const bidController = require('../controllers/bidController')
 
 router.post('/', bidController.create)
-router.get('/', bidController.getAll)
+router.get('/getbyuser/:userId', bidController.getAllByUserID)
+router.get('/getbylot/:lotId', bidController.getAllByLotID)
 
 module.exports = router;
