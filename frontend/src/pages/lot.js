@@ -26,7 +26,7 @@ function LotPage() {
   }
   const SetBid = (data) => {
     if (data.length !== 0) {
-      setHighestBid(data.sort()[data.length - 1])
+      setHighestBid(data.sort()[data.length - 1].price)
     }
   }
   const clickCreateBid = () => {
@@ -46,6 +46,7 @@ function LotPage() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   },[])
   const redemption = lotItem.redemption_price > 0
+  console.log(lotItem)
     return (
       <div class = 'container mt-3 align-items-center justify-content-center'>
         <div class="row">
@@ -173,7 +174,7 @@ function LotPage() {
               <li class="list-group-item rounded-0 flex-fill">{lotItem.description}</li>
             </ul>
           </div>
-          { user.isAuth && user.user.role === 'ADMIN'
+          { user.isAuth && user.user.role === 'ADMIN' && lotItem.approved === 0
           ? 
           <div class="text-center">
             <button type="button" class="btn btn-outline-success mx-1 mt-2" onClick={approve}>Выставить лот</button>
