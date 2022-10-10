@@ -35,20 +35,20 @@ const SignIn = observer(() => {
                     <div class="d-flex">
                         {user.user.role === 'ADMIN'
                         ?
-                        <button type="button" class="btn btn-dark border border-2 mx-1" onClick={() => navigate(ADMIN_ROUTE)}>
+                        <button type="button" class="btn btn-outline-light border border-2 mx-1" onClick={() => navigate(ADMIN_ROUTE)}>
                             Админ панель
                         </button>
                         : null}
-                        <button type="button" class="btn btn-dark border border-2 mx-1" onClick={() => navigate(ADDLOT_ROUTE)}>
+                        <button type="button" class="btn btn-outline-light border border-2 mx-1" onClick={() => navigate(ADDLOT_ROUTE)}>
                             Создать лот
                         </button>
-                        <button type="button" class="btn btn-dark border border-2 mx-1" onClick={() => navigate(MYCHATS_ROUTE)}>
+                        <button type="button" class="btn btn-outline-light border border-2 mx-1" onClick={() => navigate(MYCHATS_ROUTE)}>
                             Мои сообщения
                         </button>
-                        <button type="button" class="btn btn-dark border border-2 mx-1" onClick={() => navigate(MYLOTS_ROUTE)}>
+                        <button type="button" class="btn btn-outline-light border border-2 mx-1" onClick={() => navigate(MYLOTS_ROUTE)}>
                             Мои лоты
                         </button>
-                        <button type="button" class="btn btn-dark border border-2 mx-1" onClick={() => logOut()}>
+                        <button type="button" class="btn btn-outline-light border border-2 mx-1" onClick={() => logOut()}>
                             Выйти
                             <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
                                 <path fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0v-2z"/>
@@ -57,7 +57,7 @@ const SignIn = observer(() => {
                         </button>
                         </div>
                     :
-                    <button  type="button" class="btn btn-dark border border-2" data-bs-toggle="modal" data-bs-target="#loginModal">
+                    <button  type="button" class="btn btn-outline-light border border-2" data-bs-toggle="modal" data-bs-target="#loginModal">
                         Войти
                         <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
                             <path fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0v-2z"/>
