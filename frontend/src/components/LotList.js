@@ -5,12 +5,23 @@ import LotItem from './LotItem'
 
 const LotList = observer((props) => {
     const {lot} = useContext(Context);
-    const displayedLots =  [] 
-    for (let item in lot.lots) {
-        if (lot.lots[item].approved.toString() === props.approved) {
-            displayedLots.push(lot.lots[item])
+    const displayedLots =  []
+    if (props.approved !== undefined) {
+        for (let item in lot.lots) {
+            if (lot.lots[item].approved.toString() === props.approved) {
+                displayedLots.push(lot.lots[item])
+            }
         }
     }
+
+    if (props.userId !== undefined) {
+        for (let item in lot.lots) {
+            if (lot.lots[item].userId === props.userId) {
+                displayedLots.push(lot.lots[item])
+            }
+        }
+    }
+
     return (
         <div class="album py-5 bg-light">
             <div class="container">

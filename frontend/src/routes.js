@@ -1,9 +1,10 @@
-import {ADMIN_ROUTE, LOT_ROUTE, SIGNUP_ROUTE, HOME_ROUTE, ADDLOT_ROUTE} from './utils/consts';
+import {ADMIN_ROUTE, LOT_ROUTE, SIGNUP_ROUTE, HOME_ROUTE, ADDLOT_ROUTE, MYLOTS_ROUTE} from './utils/consts';
 import adminPanel from './pages/adminPanel';
 import Home from './pages/home';
 import lot from './pages/lot';
 import signup from './pages/signup';
 import AddLot from './pages/addLot';
+import Mylots from './pages/mylots';
 
 export const authRoutes = [
     {
@@ -13,6 +14,11 @@ export const authRoutes = [
     {
         path: ADDLOT_ROUTE,
         Component : AddLot
+    }
+    ,
+    {
+        path: MYLOTS_ROUTE,
+        Component : Mylots
     }
 ]
 

@@ -1,13 +1,9 @@
-import React, {useContext} from 'react'
-import {HOME_ROUTE, ADMIN_ROUTE, ADDLOT_ROUTE} from '../utils/consts'
-import {Context} from '../index'
+import React from 'react'
+import {HOME_ROUTE} from '../utils/consts'
 import {observer} from "mobx-react-lite"
-import {useNavigate} from 'react-router-dom'
 import SignIn from './modals/SignIn'
 
 const NavBar = observer(() => {
-    const {user} = useContext(Context);
-    const navigate = useNavigate()
     return (
         <header>
             <div class="navbar navbar-dark bg-dark shadow">

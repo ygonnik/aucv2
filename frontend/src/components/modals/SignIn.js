@@ -1,7 +1,7 @@
 import React, {useContext, useState} from "react";
 import {Context} from '../../index'
 import {useNavigate} from 'react-router-dom'
-import {ADMIN_ROUTE, SIGNUP_ROUTE, ADDLOT_ROUTE, HOME_ROUTE} from '../../utils/consts'
+import {ADMIN_ROUTE, SIGNUP_ROUTE, ADDLOT_ROUTE, HOME_ROUTE, MYLOTS_ROUTE} from '../../utils/consts'
 import {observer} from "mobx-react-lite"
 import {login} from '../../http/userAPI'
 
@@ -33,11 +33,17 @@ const SignIn = observer(() => {
             <div>
                 {user.isAuth ?
                     <div class="d-flex">
+                        {user.user.role === 'ADMIN'
+                        ?
+                        <button type="button" class="btn btn-dark border border-2 mx-1" onClick={() => navigate(ADMIN_ROUTE)}>
+                            Админ панель
+                        </button>
+                        : null}
                         <button type="button" class="btn btn-dark border border-2 mx-1" onClick={() => navigate(ADDLOT_ROUTE)}>
                             Создать лот
                         </button>
-                        <button type="button" class="btn btn-dark border border-2 mx-1" onClick={() => navigate(ADMIN_ROUTE)}>
-                            Админ панель
+                        <button type="button" class="btn btn-dark border border-2 mx-1" onClick={() => navigate(MYLOTS_ROUTE)}>
+                            Мои лоты
                         </button>
                         <button type="button" class="btn btn-dark border border-2 mx-1" onClick={() => logOut()}>
                             Выйти
