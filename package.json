@@ -25,6 +25,7 @@
     "dotenv": "^16.0.2",
     "express": "^4.18.1",
     "express-fileupload": "^1.4.0",
+    "express-ws": "^5.0.2",
     "jsonwebtoken": "^8.5.1",
     "pg": "^8.8.0",
     "pg-hstore": "^2.3.4",

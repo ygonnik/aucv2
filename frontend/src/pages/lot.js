@@ -46,7 +46,6 @@ function LotPage() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   },[])
   const redemption = lotItem.redemption_price > 0
-  console.log(lotItem)
     return (
       <div class = 'container mt-3 align-items-center justify-content-center'>
         <div class="row">
@@ -181,6 +180,14 @@ function LotPage() {
             <button type="button" class="btn btn-outline-danger mx-1 mt-2" onClick={decline}>Отклонить заявку</button>
           </div>
           : null
+          }
+          {
+            user.isAuth && lotItem.approved === 2 && (user.user.role === 'ADMIN' || user.user.id === lotItem.userId)
+            ?
+            <div class="text-center text-danger mt-2">
+              <p>Заявка отклонена</p>
+            </div>
+            : null
           }
         </div>
       </div>

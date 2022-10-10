@@ -1,6 +1,7 @@
 import React, { createContext } from 'react';
 import ReactDOM from 'react-dom/client';
 import './styles/index.css';
+import './styles/chat.css';
 import App from './App.js';
 import reportWebVitals from './reportWebVitals';
 import UserStore from './store/UserStore';

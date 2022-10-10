@@ -1,7 +1,7 @@
 import React, {useContext, useState} from "react";
 import {Context} from '../../index'
 import {useNavigate} from 'react-router-dom'
-import {ADMIN_ROUTE, SIGNUP_ROUTE, ADDLOT_ROUTE, HOME_ROUTE, MYLOTS_ROUTE} from '../../utils/consts'
+import {ADMIN_ROUTE, SIGNUP_ROUTE, ADDLOT_ROUTE, HOME_ROUTE, MYLOTS_ROUTE, MYCHATS_ROUTE} from '../../utils/consts'
 import {observer} from "mobx-react-lite"
 import {login} from '../../http/userAPI'
 
@@ -42,6 +42,9 @@ const SignIn = observer(() => {
                         <button type="button" class="btn btn-dark border border-2 mx-1" onClick={() => navigate(ADDLOT_ROUTE)}>
                             Создать лот
                         </button>
+                        <button type="button" class="btn btn-dark border border-2 mx-1" onClick={() => navigate(MYCHATS_ROUTE)}>
+                            Мои сообщения
+                        </button>
                         <button type="button" class="btn btn-dark border border-2 mx-1" onClick={() => navigate(MYLOTS_ROUTE)}>
                             Мои лоты
                         </button>
@@ -73,7 +76,7 @@ const SignIn = observer(() => {
                                 <input type="text" class="form-control mb-3" placeholder="Электронная почта или никнейм" aria-label="Username"
                                 value={emailNickname}
                                 onChange={e => setEmailNickname(e.target.value)}/>
-                                <input type="text" class="form-control mb-3" placeholder="Пароль" aria-label="Password"
+                                <input type="password" class="form-control mb-3" placeholder="Пароль" aria-label="Password"
                                 value={password}
                                 onChange={e => setPassword(e.target.value)}/>
                                 <div class="d-flex justify-content-center">
