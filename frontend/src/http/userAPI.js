@@ -18,3 +18,8 @@ export const check = async () => {
     localStorage.setItem('token', data.token)
     return jwt_decode(data.token)
 }
+
+export const fetchMessages = async (user1Id) => {
+    const {data} = await $authHost.get('api/user/getchats/' + user1Id)
+    return data
+}

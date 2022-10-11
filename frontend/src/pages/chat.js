@@ -1,15 +1,26 @@
 import React, {useContext, useState, useEffect}  from 'react';
+import { fetchMessages } from '../http/userAPI';
 import {Context} from '../index'
-import Timer from '../components/Timer';
-import {useParams} from 'react-router-dom'
-import { fetchOneLot, changeApproveLot } from '../http/lotAPI';
-import {useNavigate} from 'react-router-dom'
-import { ADMIN_ROUTE } from '../utils/consts';
-import { fetchBidsByLotId, createBid } from '../http/bidAPI';
 
 function ChatPage() {
+    const {user} = useContext(Context);
+    const interlocutors = useState([])
+
+    const SetChat = (data) => {
+        user.setMessages(data)
+        for (let message in user.messages) {
+            if (!interlocutors.includes(message.user2Id)) {
+                interlocutors.push(message.user2Id)
+            }
+        }
+    }
+
+    useEffect(() => {
+        fetchMessages(user.user.id).then(data => SetChat(data))
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[])
     return (
-      <div class="container mt-3">
+    <div class="container mt-3">
         <div class="row clearfix">
             <div class="col-lg-12">
                 <div class="card chat-app">
@@ -88,15 +99,15 @@ function ChatPage() {
                         </div>
                         <div class="chat-message clearfix">
                             <div class="input-group mb-0">
-                              <input type="text" class="form-control" placeholder="Напишите сообщение..." aria-label="Напишите сообщение..." aria-describedby="button-addon2"/>
-                              <button class="btn btn-outline-primary" type="button" id="button-addon2">Отправить</button>
+                            <input type="text" class="form-control" placeholder="Напишите сообщение..." aria-label="Напишите сообщение..." aria-describedby="button-addon2"/>
+                            <button class="btn btn-outline-primary" type="button" id="button-addon2">Отправить</button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-      </div>
+    </div>
     );
 };
 

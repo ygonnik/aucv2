@@ -1,7 +1,7 @@
 const ApiError = require('../../error/ApiError')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
-const {User} = require('../models/models')
+const {User, Message} = require('../models/models')
 const { Op } = require("sequelize");
 
 function generateJWT(id, email, nickname, role) {
@@ -61,7 +61,9 @@ class UserController {
     }
 
     async getMessages(req, res) {
-        
+        const user1Id = req.params
+        const messages = await Message.findAll({where: {user1Id}})
+        return res.json(messages)
     }
 }
 
