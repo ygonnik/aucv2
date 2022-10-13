@@ -3,30 +3,53 @@ import { fetchMessages } from '../http/userAPI';
 import {Context} from '../index'
 
 function ChatPage() {
-  const {user} = useContext(Context);
-  const interlocutors = useState([])
+    const {user} = useContext(Context);
+    const interlocutors = useState([])
 
-  const SetChat = (data) => {
-    user.setMessages(data)
-    for (let message in user.messages) {
-      if (!interlocutors.includes(message.user2Id)) {
-          interlocutors.push(message.user2Id)
-      }
+    const SetChat = (data) => {
+        user.setMessages(data)
+        for (let message in user.messages) {
+            if (!interlocutors.includes(message.user2Id)) {
+                interlocutors.push(message.user2Id)
+            }
+        }
     }
-  }
+
+    const openConnect = () => {
+        const socket = new WebSocket('ws://localhost:3001/')
+        socket.onopen = () => {
+            socket.send(JSON.stringify({
+            id1:user.user.id, // -interlocutorid
+            id2:
+            method:"connection"
+            }))
+        }
+        socket.onmessage = (event) => {
+            let msg = JSON.parse(event.data)
+            switch (msg.method) {
+                case "connection":
+                    console.log(`пользователь ${msg.username} присоединился`)
+                    break
+                case "newMessage":
+                    messageHandler(msg)
+                    break
+                default:
+                    break
+            }
+        }
+    }
+
+    const messageHandler = (msg) => {
+        const content = msg.content
+
+    }
 
     useEffect(() => {
         fetchMessages(user.user.id).then(data => SetChat(data))
       // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
     useEffect(() => {
-      const socket = new WebSocket('ws://localhost:3001/')
-      socket.onopen = () => {
-        socket.send(JSON.stringify({
-          id:user.user.id,
-          method:"connection"
-        }))
-      }
+    
     // eslint-disable-next-line react-hooks/exhaustive-deps
     },[]) 
     return (
