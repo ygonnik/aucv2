@@ -19,7 +19,12 @@ export const check = async () => {
     return jwt_decode(data.token)
 }
 
-export const fetchMessages = async (userId) => {
-    const {data} = await $authHost.get('api/user/getchats/' + userId)
+export const fetchMessages = async (user1Id) => {
+    const {data} = await $authHost.get('api/user/getchats/' + user1Id)
+    return data
+}
+
+export const fetchUsersNicknames = async () => {
+    const {data} = await $authHost.get('api/user/getnicknames')
     return data
 }

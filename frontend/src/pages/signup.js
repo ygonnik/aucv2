@@ -1,6 +1,6 @@
 import React, {useState, useContext} from 'react';
 import {Context} from '../index';
-import {registration} from '../http/userAPI'
+import {registration, fetchUsersNicknames} from '../http/userAPI'
 import {useNavigate} from 'react-router-dom'
 import { HOME_ROUTE } from '../utils/consts';
 import {observer} from "mobx-react-lite";
@@ -19,6 +19,7 @@ const Signup = observer(() => {
             dataUser = await registration(email, nickname, password)
             user.setUser(dataUser)
             user.setIsAuth(true)
+            fetchUsersNicknames().then(data => user.setUsers(data))
             navigate(HOME_ROUTE)
         }
         catch (e) {

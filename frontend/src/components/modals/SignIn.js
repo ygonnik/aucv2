@@ -3,7 +3,7 @@ import {Context} from '../../index'
 import {useNavigate} from 'react-router-dom'
 import {ADMIN_ROUTE, SIGNUP_ROUTE, ADDLOT_ROUTE, HOME_ROUTE, MYLOTS_ROUTE, MYCHATS_ROUTE} from '../../utils/consts'
 import {observer} from "mobx-react-lite"
-import {login} from '../../http/userAPI'
+import {fetchUsersNicknames, login} from '../../http/userAPI'
 
 const SignIn = observer(() => {
     const {user} = useContext(Context);
@@ -23,6 +23,7 @@ const SignIn = observer(() => {
             dataUser = await login(emailNickname, password)
             user.setUser(dataUser)
             user.setIsAuth(true)
+            fetchUsersNicknames().then(data => user.setUsers(data))
             navigate(HOME_ROUTE)
         }
         catch (e) {

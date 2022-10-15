@@ -4,6 +4,7 @@ export default class UserStore {
     constructor() {
         this._isAuth = false;
         this._user = {}
+        this._users = [];
         this._messages = [
             {user1Id: 1, user2Id: 2, send_at: '2022-09-25 12:24:28.096+05', content: 'За 5 рублей отдашь?'},
             {user1Id: 2, user2Id: 1, send_at: '2022-09-25 12:24:28.096+05', content: 'нет'},
@@ -19,6 +20,10 @@ export default class UserStore {
         this._user = user;
     }
 
+    setUsers(users) {
+        this._users = users;
+    }
+
     setMessages(messages) {
         this._messages = messages;
     }
@@ -29,6 +34,10 @@ export default class UserStore {
 
     get user() {
         return this._user;
+    }
+
+    get users() {
+        return this._users;
     }
 
     get messages() {

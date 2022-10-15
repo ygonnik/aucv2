@@ -61,9 +61,14 @@ class UserController {
     }
 
     async getMessages(req, res) {
-        const user1Id = req.params
+        const {user1Id} = req.params
         const messages = await Message.findAll({where: {user1Id}})
         return res.json(messages)
+    }
+
+    async getNicknames(req, res) {
+        const users = await User.findAll({attributes: ['id', 'nickname']})
+        return res.json(users)
     }
 }
 

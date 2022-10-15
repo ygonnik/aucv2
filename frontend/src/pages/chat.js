@@ -1,16 +1,18 @@
 import React, {useContext, useState, useEffect}  from 'react';
-import { fetchMessages } from '../http/userAPI';
+import { fetchMessages} from '../http/userAPI';
 import {Context} from '../index'
+import Interlocutor from '../components/Interlocutor';
 
 function ChatPage() {
     const {user} = useContext(Context);
-    const interlocutors = useState([])
+    const interlocutors = useState(new Map())
+    const focusInterlocutorId = useState(0)
 
     const SetChat = (data) => {
         user.setMessages(data)
         for (let message in user.messages) {
-            if (!interlocutors.includes(message.user2Id)) {
-                interlocutors.push(message.user2Id)
+            if (!interlocutors.has(message.user2Id)) {
+                interlocutors.set(message.user2Id, user.users.find(() => user.id === message.user2Id).nickname)
             }
         }
     }
@@ -20,7 +22,7 @@ function ChatPage() {
         socket.onopen = () => {
             socket.send(JSON.stringify({
             id1:user.user.id, // -interlocutorid
-            id2:
+            id2: focusInterlocutorId,
             method:"connection"
             }))
         }
@@ -49,7 +51,7 @@ function ChatPage() {
       // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
     useEffect(() => {
-    
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
     },[]) 
     return (
@@ -59,12 +61,14 @@ function ChatPage() {
                 <div class="card chat-app">
                     <div id="plist" class="people-list">
                         <ul class="list-unstyled chat-list mt-2 mb-0">
+                            {interlocutors.forEach( (value, key, map) =>
+                            <Interlocutor key={key} nickname={value}/>)}
                             <li class="clearfix">
                                 <div class="about">
                                     <div class="name">Vincent Porter</div>
                                 </div>
                             </li>
-                            <li class="clearfix active">
+                            <li class="clearfix">
                                 <div class="about">
                                     <div class="name">Aiden Chavez</div>
                                 </div>
@@ -96,8 +100,7 @@ function ChatPage() {
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="chat-about">
-                                        <h6 class="m-b-0">Aiden Chavez</h6>
-                                        <small>Last seen: 2 hours ago</small>
+                                        <h6 class="m-b-0" id="interlocutorName">Aiden Chavez</h6>
                                     </div>
                                 </div>
                             </div>
