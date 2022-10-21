@@ -70,6 +70,12 @@ class UserController {
         const users = await User.findAll({attributes: ['id', 'nickname']})
         return res.json(users)
     }
+
+    async createMessage(req, res, next) {
+        const {content, user1Id, user2Id} = req.body
+        const newMessage = await Message.create({send_at: new Date(), content, user1Id, user2Id })
+        return res.json(newMessage)
+    }
 }
 
 module.exports = new UserController();
