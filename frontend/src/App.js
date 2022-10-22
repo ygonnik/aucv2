@@ -21,15 +21,17 @@ const App = observer(() => {
         }).then(fetchUsersNicknames()
         .then(data => {
           let interlocutors = []
+          let interlocutorsId = []
 
           for (let message of user.messages) {
-            if (!interlocutors.has(message.user2Id)) { //todo
-                interlocutors.set({
+            if (!interlocutorsId.includes(message.user2Id)) {
+                interlocutors.push({
                   id: message.user2Id,
-                  nickname: user.users.find(user => user.id === message.user2Id).nickname})
+                  nickname: data.find(user => user.id === message.user2Id).nickname})
+                interlocutorsId.push(message.user2Id)
             }
           }
-          user.setInterlocutors(data)}))
+          user.setInterlocutors(interlocutors)}))
         
       }).finally(() => setLoading(false))
     // eslint-disable-next-line react-hooks/exhaustive-deps

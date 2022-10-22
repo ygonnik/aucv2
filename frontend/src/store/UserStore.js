@@ -34,7 +34,7 @@ export default class UserStore {
     }
 
     get interlocutors() {
-        return this._users;
+        return this._interlocutors;
     }
 
     get messages() {

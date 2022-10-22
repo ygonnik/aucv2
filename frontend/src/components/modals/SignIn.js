@@ -3,7 +3,7 @@ import {Context} from '../../index'
 import {useNavigate} from 'react-router-dom'
 import {ADMIN_ROUTE, SIGNUP_ROUTE, ADDLOT_ROUTE, HOME_ROUTE, MYLOTS_ROUTE, MYCHATS_ROUTE} from '../../utils/consts'
 import {observer} from "mobx-react-lite"
-import {fetchUsersNicknames, login} from '../../http/userAPI'
+import {fetchUsersNicknames, fetchMessages, login} from '../../http/userAPI'
 
 const SignIn = observer(() => {
     const {user} = useContext(Context);
@@ -23,7 +23,23 @@ const SignIn = observer(() => {
             dataUser = await login(emailNickname, password)
             user.setUser(dataUser)
             user.setIsAuth(true)
-            fetchUsersNicknames().then(data => user.setUsers(data))
+            fetchMessages(user.user.id)
+            .then(data => {
+              user.setMessages(data)
+            }).then(fetchUsersNicknames()
+            .then(data => {
+              let interlocutors = []
+              let interlocutorsId = []
+    
+              for (let message of user.messages) {
+                if (!interlocutorsId.includes(message.user2Id)) {
+                    interlocutors.push({
+                      id: message.user2Id,
+                      nickname: data.find(user => user.id === message.user2Id).nickname})
+                    interlocutorsId.push(message.user2Id)
+                }
+              }
+              user.setInterlocutors(interlocutors)}))
             navigate(HOME_ROUTE)
         }
         catch (e) {

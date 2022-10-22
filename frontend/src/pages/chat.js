@@ -7,19 +7,7 @@ import { observable } from "mobx"
 
 const ChatPage = observer(() => {
     const {user} = useContext(Context);
-    const interlocutors = useState(observable(new Map()))
     const focusInterlocutorId = useState(0)
-
-    const SetChat = (data) => {
-        user.setMessages(data)
-        for (let message of user.messages) {
-            if (!interlocutors[0].has(message.user2Id)) {
-                interlocutors[0].set(message.user2Id, user.users.find(user => user.id === message.user2Id).nickname)
-            }
-        }
-        console.log(user.users)
-        console.log(interlocutors[0])
-    }
 
     const openConnect = () => {
         const socket = new WebSocket('ws://localhost:3001/')
@@ -51,7 +39,7 @@ const ChatPage = observer(() => {
     }
 
     useEffect(() => {
-        fetchMessages(user.user.id).then(data => SetChat(data))
+        
       // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
     useEffect(() => {
@@ -65,8 +53,8 @@ const ChatPage = observer(() => {
                 <div class="card chat-app">
                     <div id="plist" class="people-list">
                         <ul class="list-unstyled chat-list mt-2 mb-0">
-                            {Object.entries(interlocutors).map( ([key, value]) =>
-                            <Interlocutor key={key} nickname={value}/>)}
+                            {user.interlocutors.map( (interlocutor) =>
+                            <Interlocutor key={interlocutor.id} nickname={interlocutor.nickname}/>)}
                             <li class="clearfix">
                                 <div class="about">
                                     <div class="name">Vincent Porter</div>
