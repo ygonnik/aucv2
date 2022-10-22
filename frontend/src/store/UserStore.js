@@ -4,11 +4,8 @@ export default class UserStore {
     constructor() {
         this._isAuth = false;
         this._user = {}
-        this._users = [];
-        this._messages = [
-            {user1Id: 1, user2Id: 2, send_at: '2022-09-25 12:24:28.096+05', content: 'За 5 рублей отдашь?'},
-            {user1Id: 2, user2Id: 1, send_at: '2022-09-25 12:24:28.096+05', content: 'нет'},
-        ]
+        this._interlocutors = [];
+        this._messages = []
         makeAutoObservable(this)
     }
 
@@ -20,8 +17,8 @@ export default class UserStore {
         this._user = user;
     }
 
-    setUsers(users) {
-        this._users = users;
+    setInterlocutors(interlocutors) {
+        this._interlocutors = interlocutors;
     }
 
     setMessages(messages) {
@@ -36,7 +33,7 @@ export default class UserStore {
         return this._user;
     }
 
-    get users() {
+    get interlocutors() {
         return this._users;
     }
 

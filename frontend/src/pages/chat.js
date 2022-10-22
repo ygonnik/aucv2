@@ -2,19 +2,23 @@ import React, {useContext, useState, useEffect}  from 'react';
 import { fetchMessages} from '../http/userAPI';
 import {Context} from '../index'
 import Interlocutor from '../components/Interlocutor';
+import { observer } from 'mobx-react-lite';
+import { observable } from "mobx"
 
-function ChatPage() {
+const ChatPage = observer(() => {
     const {user} = useContext(Context);
-    const interlocutors = useState(new Map())
+    const interlocutors = useState(observable(new Map()))
     const focusInterlocutorId = useState(0)
 
     const SetChat = (data) => {
         user.setMessages(data)
-        for (let message in user.messages) {
-            if (!interlocutors.has(message.user2Id)) {
-                interlocutors.set(message.user2Id, user.users.find(() => user.id === message.user2Id).nickname)
+        for (let message of user.messages) {
+            if (!interlocutors[0].has(message.user2Id)) {
+                interlocutors[0].set(message.user2Id, user.users.find(user => user.id === message.user2Id).nickname)
             }
         }
+        console.log(user.users)
+        console.log(interlocutors[0])
     }
 
     const openConnect = () => {
@@ -61,7 +65,7 @@ function ChatPage() {
                 <div class="card chat-app">
                     <div id="plist" class="people-list">
                         <ul class="list-unstyled chat-list mt-2 mb-0">
-                            {interlocutors.forEach( (value, key, map) =>
+                            {Object.entries(interlocutors).map( ([key, value]) =>
                             <Interlocutor key={key} nickname={value}/>)}
                             <li class="clearfix">
                                 <div class="about">
@@ -139,6 +143,6 @@ function ChatPage() {
         </div>
     </div>
     );
-};
+});
 
 export default ChatPage;

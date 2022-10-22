@@ -6,6 +6,7 @@ import Footer from './components/Footer';
 import { observer } from 'mobx-react-lite';
 import { Context } from './index';
 import {check} from './http/userAPI'
+import {fetchUsersNicknames, fetchMessages} from '../src/http/userAPI'
 const App = observer(() => {
     const {user} = useContext(Context)
     const [loading, setLoading] = useState(true)
@@ -14,6 +15,22 @@ const App = observer(() => {
       check().then(data => {
         user.setUser(data)
         user.setIsAuth(true)
+        fetchMessages(user.user.id)
+        .then(data => {
+          user.setMessages(data)
+        }).then(fetchUsersNicknames()
+        .then(data => {
+          let interlocutors = []
+
+          for (let message of user.messages) {
+            if (!interlocutors.has(message.user2Id)) { //todo
+                interlocutors.set({
+                  id: message.user2Id,
+                  nickname: user.users.find(user => user.id === message.user2Id).nickname})
+            }
+          }
+          user.setInterlocutors(data)}))
+        
       }).finally(() => setLoading(false))
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
