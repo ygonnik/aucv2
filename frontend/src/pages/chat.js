@@ -4,17 +4,17 @@ import {Context} from '../index'
 import Interlocutor from '../components/Interlocutor';
 import { observer } from 'mobx-react-lite';
 import { observable } from "mobx"
+import Message from '../components/Message';
 
 const ChatPage = observer(() => {
     const {user} = useContext(Context);
-    const focusInterlocutorId = useState(0)
 
     const openConnect = () => {
         const socket = new WebSocket('ws://localhost:3001/')
         socket.onopen = () => {
             socket.send(JSON.stringify({
             id1:user.user.id, // -interlocutorid
-            id2: focusInterlocutorId,
+            id2: user.selectedInterlocutor,
             method:"connection"
             }))
         }
@@ -99,6 +99,8 @@ const ChatPage = observer(() => {
                         </div>
                         <div class="chat-history">
                             <ul class="m-b-0">
+                                {user.messages.get(user.selectedInterlocutor).map( (message) =>
+                                <Message key={message.id} message={message}/>)}
                                 <li class="clearfix">
                                     <div class="message-data text-end">
                                         <span class="message-data-time">10:10 AM, Today</span>

@@ -24,18 +24,7 @@ const Signup = observer(() => {
                 user.setMessages(data)
             }).then(fetchUsersNicknames()
             .then(data => {
-                let interlocutors = []
-                let interlocutorsId = []
-    
-                for (let message of user.messages) {
-                    if (!interlocutorsId.includes(message.user2Id)) {
-                        interlocutors.push({
-                            id: message.user2Id,
-                            nickname: data.find(user => user.id === message.user2Id).nickname})
-                        interlocutorsId.push(message.user2Id)
-                    }
-                }
-                user.setInterlocutors(interlocutors)}))
+                user.setInterlocutors(data)}))
             navigate(HOME_ROUTE)
         }
         catch (e) {

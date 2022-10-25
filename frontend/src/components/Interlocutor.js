@@ -1,8 +1,12 @@
-import React from "react";
+import React, {useContext} from "react";
+import {Context} from '../index'
 
 const Interlocutor = (props) =>{
+    const {user} = useContext(Context);
+
     const ChangeInterlocutorName = () => {
-        document.getElementById("Sitename").innerText = props.nickname
+        user.selectedInterlocutor = props.key
+        document.getElementById("interlocutorName").innerText = props.nickname
     }
 
         return (

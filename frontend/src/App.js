@@ -20,18 +20,7 @@ const App = observer(() => {
           user.setMessages(data)
         }).then(fetchUsersNicknames()
         .then(data => {
-          let interlocutors = []
-          let interlocutorsId = []
-
-          for (let message of user.messages) {
-            if (!interlocutorsId.includes(message.user2Id)) {
-                interlocutors.push({
-                  id: message.user2Id,
-                  nickname: data.find(user => user.id === message.user2Id).nickname})
-                interlocutorsId.push(message.user2Id)
-            }
-          }
-          user.setInterlocutors(interlocutors)}))
+          user.setInterlocutors(data)}))
         
       }).finally(() => setLoading(false))
     // eslint-disable-next-line react-hooks/exhaustive-deps
