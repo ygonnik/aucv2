@@ -24,15 +24,16 @@ export default class UserStore {
         let message = null
         const iter = this._messages.values();
 
-        for (let i = 0; i < this._messages.size; i++) {
+        for (let i = 0; i < this.messages.size; i++) {
             message = iter.next().value
-            if (!interlocutorsId.includes(message.user2Id)) {
-                data.push({
-                    id: message.user2Id,
-                    nickname: data.find(user => user.id === message.user2Id).nickname}) // TODO
-                interlocutorsId.push(message.user2Id)
+            if (!interlocutorsId.includes(message[0].user2Id)) {
+                interlocutors.push({
+                    id: message[0].user2Id,
+                    nickname: data.find(user => user.id === message[0].user2Id).nickname}) // TODO
+                interlocutorsId.push(message[0].user2Id)
             }
         }
+        this.setSelectedInterlocutor(interlocutors[0])
         this._interlocutors = interlocutors;
     }
 

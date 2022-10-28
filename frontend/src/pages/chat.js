@@ -54,7 +54,7 @@ const ChatPage = observer(() => {
                     <div id="plist" class="people-list">
                         <ul class="list-unstyled chat-list mt-2 mb-0">
                             {user.interlocutors.map( (interlocutor) =>
-                            <Interlocutor key={interlocutor.id} nickname={interlocutor.nickname}/>)}
+                            <Interlocutor key={interlocutor.id} id={interlocutor.id} nickname={interlocutor.nickname}/>)}
                             <li class="clearfix">
                                 <div class="about">
                                     <div class="name">Vincent Porter</div>
@@ -92,14 +92,15 @@ const ChatPage = observer(() => {
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="chat-about">
-                                        <h6 class="m-b-0" id="interlocutorName">Aiden Chavez</h6>
+                                        <h6 class="m-b-0" id="interlocutorName">{user.selectedInterlocutor.nickname}</h6>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="chat-history">
                             <ul class="m-b-0">
-                                {user.messages.get(user.selectedInterlocutor).map( (message) =>
+                                {console.log(user.selectedInterlocutor)}
+                                {user.messages.get(user.selectedInterlocutor.id).map( (message) =>
                                 <Message key={message.id} message={message}/>)}
                                 <li class="clearfix">
                                     <div class="message-data text-end">
