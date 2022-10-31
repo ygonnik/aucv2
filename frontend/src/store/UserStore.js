@@ -29,7 +29,7 @@ export default class UserStore {
             if (!interlocutorsId.includes(message[0].user2Id)) {
                 interlocutors.push({
                     id: message[0].user2Id,
-                    nickname: data.find(user => user.id === message[0].user2Id).nickname}) // TODO
+                    nickname: data.find(user => user.id === message[0].user2Id).nickname})
                 interlocutorsId.push(message[0].user2Id)
             }
         }
@@ -39,13 +39,14 @@ export default class UserStore {
 
     setMessages(messages) {
         let dialogs = new Map()
-
+        let interlocutorId = null
         for (let message of messages) {
-            if (dialogs.has(message.user2Id)) {
-                dialogs.get(message.user2Id).push(message)
+            messages.user1Id === this.user.id ? interlocutorId = message.user2Id : interlocutorId = message.user1Id
+            if (dialogs.has(interlocutorId)) {
+                dialogs.get(interlocutorId).push(message)
             }
             else {
-                dialogs.set(message.user2Id, [message])
+                dialogs.set(interlocutorId, [message])
             }
         }
         this._messages = dialogs;

@@ -7,6 +7,6 @@ router.post("/registration", userController.registration);
 router.post("/login", userController.login);
 router.post("/createmessage", userController.createMessage);
 router.get("/auth", authMiddleware, userController.check)
-router.get("/getchats/:user1Id", authMiddleware, userController.getMessages)
+router.get("/getchats/:userId", authMiddleware, userController.getMessages)
 router.get("/getnicknames", authMiddleware, userController.getNicknames)
 module.exports = router;

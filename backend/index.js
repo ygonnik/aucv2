@@ -28,6 +28,7 @@ app.ws('/', (ws, req) => {
                 connectionHandler(ws, msg)
                 break
             case 'newMessage':
+                newMessageHandler(ws, msg)
                 break
         }
     })
@@ -49,14 +50,28 @@ const start = async function() {
 start();
 
 const connectionHandler = (ws, msg) => {
-    ws.id = msg.id
+    let sessionId = null
+    msg.id1 < msg.id2 ? sessionId = msg.id1 + '-' + msg.id2 : sessionId = msg.id2 + '-' + msg.id1
+    ws.id = sessionId
     broadcastConnection(ws, msg)
 }
 
 const broadcastConnection = (ws, msg) => {
+    let sessionId = null
+    msg.id1 < msg.id2 ? sessionId = msg.id1 + '-' + msg.id2 : sessionId = msg.id2 + '-' + msg.id1
     aWss.clients.forEach(client => {
-        if (client.id === msg.id) {
-        client.send('Пользователь подключен')
+        if (client.id === sessionId) {
+        client.send(JSON.stringify(msg))
+        }
+    })
+}
+
+const newMessageHandler = (ws, msg) => {
+    let sessionId = null
+    msg.id1 < msg.id2 ? sessionId = msg.id1 + '-' + msg.id2 : sessionId = msg.id2 + '-' + msg.id1
+    aWss.clients.forEach(client => {
+        if (client.id === sessionId) {
+        client.send(JSON.stringify(msg))
         }
     })
 }

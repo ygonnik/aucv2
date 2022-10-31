@@ -9,39 +9,8 @@ import Message from '../components/Message';
 const ChatPage = observer(() => {
     const {user} = useContext(Context);
 
-    const openConnect = () => {
-        const socket = new WebSocket('ws://localhost:3001/')
-        socket.onopen = () => {
-            socket.send(JSON.stringify({
-            id1:user.user.id, // -interlocutorid
-            id2: user.selectedInterlocutor,
-            method:"connection"
-            }))
-        }
-        socket.onmessage = (event) => {
-            let msg = JSON.parse(event.data)
-            switch (msg.method) {
-                case "connection":
-                    console.log(`пользователь ${msg.username} присоединился`)
-                    break
-                case "newMessage":
-                    messageHandler(msg)
-                    break
-                default:
-                    break
-            }
-        }
-    }
 
-    const messageHandler = (msg) => {
-        const content = msg.content
 
-    }
-
-    useEffect(() => {
-        
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[])
     useEffect(() => {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
