@@ -41,7 +41,7 @@ export default class UserStore {
         let dialogs = new Map()
         let interlocutorId = null
         for (let message of messages) {
-            messages.user1Id === this.user.id ? interlocutorId = message.user2Id : interlocutorId = message.user1Id
+            interlocutorId = (message.user1Id === this.user.id) ? message.user2Id : message.user1Id
             if (dialogs.has(interlocutorId)) {
                 dialogs.get(interlocutorId).push(message)
             }

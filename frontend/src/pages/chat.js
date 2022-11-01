@@ -68,7 +68,6 @@ const ChatPage = observer(() => {
                         </div>
                         <div class="chat-history">
                             <ul class="m-b-0">
-                                {console.log(user.selectedInterlocutor)}
                                 {user.messages.get(user.selectedInterlocutor.id).map( (message) =>
                                 <Message key={message.id} message={message}/>)}
                                 <li class="clearfix">
