@@ -3,10 +3,11 @@ import {Context} from '../index'
 
 const Message = ({message}) => {
     const {user} = useContext(Context);
-    const isCurrentUserSender = user.user.id === message.user1Id
+    const isCurrentUserSender = (user.user.id === message.user1Id) || (user.user.id === message.id1)
         return (
             <div>
-            { isCurrentUserSender ?
+            { 
+            isCurrentUserSender ?
             <li class="clearfix">
                 <div class="message-data text-end">
                     <span class="message-data-time">{message.send_at}</span>
@@ -19,7 +20,8 @@ const Message = ({message}) => {
                     <span class="message-data-time">{message.send_at}</span>
                 </div>
                 <div class="message my-message"> {message.content} </div>
-            </li>}
+            </li>
+            }
             </div>
             
         );

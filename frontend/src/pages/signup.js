@@ -24,7 +24,8 @@ const Signup = observer(() => {
                 user.setMessages(data)
             }).then(fetchUsersNicknames()
             .then(data => {
-                user.setInterlocutors(data)}))
+                user.setInterlocutors(data)
+                user.setSelectedInterlocutor(user.interlocutors[0])}))
             navigate(HOME_ROUTE)
         }
         catch (e) {

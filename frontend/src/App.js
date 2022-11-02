@@ -20,7 +20,8 @@ const App = observer(() => {
           user.setMessages(data)
         }).then(fetchUsersNicknames()
         .then(data => {
-          user.setInterlocutors(data)}))
+          user.setInterlocutors(data)
+          user.setSelectedInterlocutor(user.interlocutors[0])}))
         
       }).finally(() => setLoading(false))
     // eslint-disable-next-line react-hooks/exhaustive-deps

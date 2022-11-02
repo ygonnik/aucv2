@@ -1,18 +1,30 @@
 import React, {useContext, useState, useEffect}  from 'react';
-import { fetchMessages} from '../http/userAPI';
 import {Context} from '../index'
 import Interlocutor from '../components/Interlocutor';
 import { observer } from 'mobx-react-lite';
-import { observable } from "mobx"
 import Message from '../components/Message';
+import {fetchUsersNicknames, fetchMessages} from '../http/userAPI'
 
 const ChatPage = observer(() => {
     const {user} = useContext(Context);
+    const [textboxContent, setTextboxContent] = useState('')
 
+    let messageId = 0
 
+    const SendMessage = () => {
+        user.sockets.get(user.selectedInterlocutor.id).send(JSON.stringify({
+            id1: user.user.id,
+            id2: user.selectedInterlocutor.id,
+            method:"newMessage",
+            content: textboxContent,
+            send_at: (new Date()).toString()
+            }))
+    }
 
+    //todo: logging messages, close sessions
     useEffect(() => {
-
+        
+        user.setSockets(user.messages)
     // eslint-disable-next-line react-hooks/exhaustive-deps
     },[]) 
     return (
@@ -24,36 +36,6 @@ const ChatPage = observer(() => {
                         <ul class="list-unstyled chat-list mt-2 mb-0">
                             {user.interlocutors.map( (interlocutor) =>
                             <Interlocutor key={interlocutor.id} id={interlocutor.id} nickname={interlocutor.nickname}/>)}
-                            <li class="clearfix">
-                                <div class="about">
-                                    <div class="name">Vincent Porter</div>
-                                </div>
-                            </li>
-                            <li class="clearfix">
-                                <div class="about">
-                                    <div class="name">Aiden Chavez</div>
-                                </div>
-                            </li>
-                            <li class="clearfix">
-                                <div class="about">
-                                    <div class="name">Mike Thomas</div>
-                                </div>
-                            </li>                                    
-                            <li class="clearfix">
-                                <div class="about">
-                                    <div class="name">Christian Kelly</div>
-                                </div>
-                            </li>
-                            <li class="clearfix">
-                                <div class="about">
-                                    <div class="name">Monica Ward</div>
-                                </div>
-                            </li>
-                            <li class="clearfix">
-                                <div class="about">
-                                    <div class="name">Dean Henry</div>
-                                </div>
-                            </li>
                         </ul>
                     </div>
                     <div class="chat">
@@ -68,32 +50,15 @@ const ChatPage = observer(() => {
                         </div>
                         <div class="chat-history">
                             <ul class="m-b-0">
+                                {console.log(user.messages)}
                                 {user.messages.get(user.selectedInterlocutor.id).map( (message) =>
-                                <Message key={message.id} message={message}/>)}
-                                <li class="clearfix">
-                                    <div class="message-data text-end">
-                                        <span class="message-data-time">10:10 AM, Today</span>
-                                    </div>
-                                    <div class="message other-message float-right"> Hi Aiden, how are you? How is the project coming along? </div>
-                                </li>
-                                <li class="clearfix">
-                                    <div class="message-data">
-                                        <span class="message-data-time">10:12 AM, Today</span>
-                                    </div>
-                                    <div class="message my-message">Are we meeting today?</div>                                    
-                                </li>                               
-                                <li class="clearfix">
-                                    <div class="message-data">
-                                        <span class="message-data-time">10:15 AM, Today</span>
-                                    </div>
-                                    <div class="message my-message">Project has been already finished and I have results to show you.</div>
-                                </li>
+                                <Message key={messageId++} message={message}/>)}
                             </ul>
                         </div>
                         <div class="chat-message clearfix">
                             <div class="input-group mb-0">
-                            <input type="text" class="form-control" placeholder="Напишите сообщение..." aria-label="Напишите сообщение..." aria-describedby="button-addon2"/>
-                            <button class="btn btn-outline-primary" type="button" id="button-addon2">Отправить</button>
+                            <input type="text" class="form-control" placeholder="Напишите сообщение..." aria-label="Напишите сообщение..." aria-describedby="button-addon2" onChange={e => setTextboxContent(e.target.value)} value={textboxContent}/>
+                            <button class="btn btn-outline-primary" type="button" id="button-addon2" onClick={SendMessage}>Отправить</button>
                             </div>
                         </div>
                     </div>

@@ -6,8 +6,37 @@ export default class UserStore {
         this._user = {}
         this._interlocutors = [];
         this._messages = new Map()
+        this._sockets = new Map()
         this._selectedInterlocutor = null;
         makeAutoObservable(this)
+    }
+
+    openConnect (interlocutorId) {
+        const socket = new WebSocket('ws://localhost:3001/')
+        socket.onopen = () => {
+            socket.send(JSON.stringify({
+            id1: this.user.id,
+            id2: interlocutorId,
+            method:"connection"
+            }))
+        }
+        socket.onmessage = (event) => {
+            let msg = JSON.parse(event.data)
+            switch (msg.method) {
+                case "connection":
+                    console.log(`пользователь присоединился`)
+                    break
+                case "newMessage":
+                    let interlocutorId = null
+                    msg.id1 === this.user.id ? interlocutorId = msg.id2 : interlocutorId = msg.id1
+                    this.pushNewMessage(interlocutorId, msg)
+                    break
+                default:
+                    break
+            }
+        }
+
+        return socket
     }
 
     setIsAuth(bool) {
@@ -26,14 +55,15 @@ export default class UserStore {
 
         for (let i = 0; i < this.messages.size; i++) {
             message = iter.next().value
-            if (!interlocutorsId.includes(message[0].user2Id)) {
+            let interlocutorId = null
+            message[0].user1Id === this.user.id ? interlocutorId = message[0].user2Id : interlocutorId = message[0].user1Id
+            if (!interlocutorsId.includes(interlocutorId)) {
                 interlocutors.push({
-                    id: message[0].user2Id,
-                    nickname: data.find(user => user.id === message[0].user2Id).nickname})
-                interlocutorsId.push(message[0].user2Id)
+                    id: interlocutorId,
+                    nickname: data.find(user => user.id === interlocutorId).nickname})
+                interlocutorsId.push(interlocutorId)
             }
         }
-        this.setSelectedInterlocutor(interlocutors[0])
         this._interlocutors = interlocutors;
     }
 
@@ -50,6 +80,18 @@ export default class UserStore {
             }
         }
         this._messages = dialogs;
+    }
+
+    pushNewMessage(interlocutorId, msg) {
+        this.messages.get(interlocutorId).push(msg)
+    }
+
+    setSockets(messages) {
+        let sockets = new Map()
+        for (let interlocutorId of messages.keys()) {
+            sockets.set(interlocutorId, this.openConnect(interlocutorId))
+        }
+        this._sockets = sockets;
     }
 
     setSelectedInterlocutor(selectedInterlocutor) {
@@ -72,7 +114,13 @@ export default class UserStore {
         return this._messages
     }
 
+    get sockets() {
+        return this._sockets
+    }
+
     get selectedInterlocutor() {
         return this._selectedInterlocutor
     }
+
+    
 }
