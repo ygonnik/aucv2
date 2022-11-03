@@ -22,6 +22,7 @@ const Signup = observer(() => {
             fetchMessages(user.user.id)
             .then(data => {
                 user.setMessages(data)
+                user.setSockets(user.messages)
             }).then(fetchUsersNicknames()
             .then(data => {
                 user.setInterlocutors(data)

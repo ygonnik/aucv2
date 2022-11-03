@@ -51,14 +51,14 @@ start();
 
 const connectionHandler = (ws, msg) => {
     let sessionId = null
-    msg.id1 < msg.id2 ? sessionId = msg.id1 + '-' + msg.id2 : sessionId = msg.id2 + '-' + msg.id1
+    msg.user1Id < msg.user2Id ? sessionId = msg.user1Id + '-' + msg.user2Id : sessionId = msg.user2Id + '-' + msg.user1Id
     ws.id = sessionId
     newMessageHandler(ws, msg)
 }
 
 const newMessageHandler = (ws, msg) => {
     let sessionId = null
-    msg.id1 < msg.id2 ? sessionId = msg.id1 + '-' + msg.id2 : sessionId = msg.id2 + '-' + msg.id1
+    msg.user1Id < msg.user2Id ? sessionId = msg.user1Id + '-' + msg.user2Id : sessionId = msg.user2Id + '-' + msg.user1Id
     aWss.clients.forEach(client => {
         if (client.id === sessionId) {
         client.send(JSON.stringify(msg))

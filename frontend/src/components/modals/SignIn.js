@@ -14,6 +14,7 @@ const SignIn = observer(() => {
     const logOut = () => {
         user.setUser({})
         user.setIsAuth(false)
+        user.closeSockets()
         localStorage.removeItem('token')
     }
 
@@ -26,6 +27,7 @@ const SignIn = observer(() => {
             fetchMessages(user.user.id)
             .then(data => {
                 user.setMessages(data)
+                user.setSockets(user.messages)
             }).then(fetchUsersNicknames()
             .then(data => {
                 user.setInterlocutors(data)

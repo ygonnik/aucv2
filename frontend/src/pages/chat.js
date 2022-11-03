@@ -3,7 +3,7 @@ import {Context} from '../index'
 import Interlocutor from '../components/Interlocutor';
 import { observer } from 'mobx-react-lite';
 import Message from '../components/Message';
-import {fetchUsersNicknames, fetchMessages} from '../http/userAPI'
+import {fetchUsersNicknames, fetchMessages, createMessage} from '../http/userAPI'
 
 const ChatPage = observer(() => {
     const {user} = useContext(Context);
@@ -12,19 +12,21 @@ const ChatPage = observer(() => {
     let messageId = 0
 
     const SendMessage = () => {
-        user.sockets.get(user.selectedInterlocutor.id).send(JSON.stringify({
-            id1: user.user.id,
-            id2: user.selectedInterlocutor.id,
+        const message = {
+            user1Id: user.user.id,
+            user2Id: user.selectedInterlocutor.id,
             method:"newMessage",
             content: textboxContent,
-            send_at: (new Date()).toString()
-            }))
+            send_at: new Date()
+            }
+        user.sockets.get(user.selectedInterlocutor.id).send(JSON.stringify(message))
+        createMessage(message)
     }
 
     //todo: logging messages, close sessions
     useEffect(() => {
         
-        user.setSockets(user.messages)
+        
     // eslint-disable-next-line react-hooks/exhaustive-deps
     },[]) 
     return (

@@ -18,12 +18,16 @@ const App = observer(() => {
         fetchMessages(user.user.id)
         .then(data => {
           user.setMessages(data)
+          user.setSockets(user.messages)
         }).then(fetchUsersNicknames()
         .then(data => {
           user.setInterlocutors(data)
           user.setSelectedInterlocutor(user.interlocutors[0])}))
         
       }).finally(() => setLoading(false))
+      window.addEventListener("beforeunload", (e) => {  
+          user.closeSockets()
+      });
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 

@@ -24,6 +24,11 @@ export const fetchMessages = async (userId) => {
     return data
 }
 
+export const createMessage = async (message) => {
+    const {data} = await $authHost.post('api/user/createmessage', message)
+    return data
+}
+
 export const fetchUsersNicknames = async () => {
     const {data} = await $authHost.get('api/user/getnicknames')
     return data

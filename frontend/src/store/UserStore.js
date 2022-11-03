@@ -15,8 +15,8 @@ export default class UserStore {
         const socket = new WebSocket('ws://localhost:3001/')
         socket.onopen = () => {
             socket.send(JSON.stringify({
-            id1: this.user.id,
-            id2: interlocutorId,
+            user1Id: this.user.id,
+            user2Id: interlocutorId,
             method:"connection"
             }))
         }
@@ -28,7 +28,7 @@ export default class UserStore {
                     break
                 case "newMessage":
                     let interlocutorId = null
-                    msg.id1 === this.user.id ? interlocutorId = msg.id2 : interlocutorId = msg.id1
+                    msg.user1Id === this.user.id ? interlocutorId = msg.user2Id : interlocutorId = msg.user1Id
                     this.pushNewMessage(interlocutorId, msg)
                     break
                 default:
@@ -92,6 +92,12 @@ export default class UserStore {
             sockets.set(interlocutorId, this.openConnect(interlocutorId))
         }
         this._sockets = sockets;
+    }
+
+    closeSockets() {
+        for (let socket of this.sockets.values()) {
+            socket.close()
+        }
     }
 
     setSelectedInterlocutor(selectedInterlocutor) {
