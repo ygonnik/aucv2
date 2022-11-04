@@ -23,14 +23,17 @@ const LotList = observer((props) => {
     }
 
     return (
-        <div class="album py-5 bg-light">
-            <div class="container">
-                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
-                    {displayedLots.map( lot =>
-                        <LotItem key={lot.id} lot={lot}/>)}
+            displayedLots.length === 0 ?
+            <p class="text-xl-center fs-1">Нет лотов.</p>
+            :
+            <div class="album py-5 bg-light">
+                <div class="container">
+                    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
+                        {displayedLots.map( lot =>
+                            <LotItem key={lot.id} lot={lot}/>)}
+                    </div>
                 </div>
             </div>
-        </div>
     );
 });
 
