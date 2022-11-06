@@ -3,8 +3,7 @@ import {makeAutoObservable} from 'mobx'
 export default class LotStore {
     constructor() {
         this._lots = []
-        this._bids = [
-        ]
+        this._bids = []
         makeAutoObservable(this)
     }
 

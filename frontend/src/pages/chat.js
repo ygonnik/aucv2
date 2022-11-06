@@ -1,9 +1,9 @@
-import React, {useContext, useState, useEffect}  from 'react';
+import React, {useContext, useState}  from 'react';
 import {Context} from '../index'
 import Interlocutor from '../components/Interlocutor';
 import { observer } from 'mobx-react-lite';
 import Message from '../components/Message';
-import {fetchUsersNicknames, fetchMessages, createMessage} from '../http/userAPI'
+import {createMessage} from '../http/userAPI'
 
 const ChatPage = observer(() => {
     const {user} = useContext(Context);
@@ -23,12 +23,6 @@ const ChatPage = observer(() => {
         createMessage(message)
     }
 
-    //todo: logging messages, close sessions
-    useEffect(() => {
-        
-        
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[]) 
     return (
     <div class="container mt-3">
         <div class="row clearfix">
