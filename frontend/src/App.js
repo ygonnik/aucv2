@@ -21,6 +21,7 @@ const App = observer(() => {
           user.setSockets(user.messages)
         }).then(fetchUsersNicknames()
         .then(data => {
+          user.setUsers(data)
           user.setInterlocutors(data)
           user.setSelectedInterlocutor(user.interlocutors[0])}))
         

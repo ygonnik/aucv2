@@ -4,6 +4,7 @@ export default class UserStore {
     constructor() {
         this._isAuth = false;
         this._user = {}
+        this._users = [];
         this._interlocutors = [];
         this._messages = new Map()
         this._sockets = new Map()
@@ -12,7 +13,7 @@ export default class UserStore {
     }
 
     openConnect (interlocutorId) {
-        const socket = new WebSocket('ws://localhost:3001/')
+        const socket = new WebSocket('ws://localhost:5000/')
         socket.onopen = () => {
             socket.send(JSON.stringify({
             user1Id: this.user.id,
@@ -45,6 +46,10 @@ export default class UserStore {
 
     setUser(user) {
         this._user = user;
+    }
+
+    setUsers(users) {
+        this._users = users;
     }
 
     setInterlocutors(data) {
@@ -86,12 +91,22 @@ export default class UserStore {
         this.messages.get(interlocutorId).push(msg)
     }
 
+    pushNewInterlocutor(interlocutor) {
+        this.interlocutors.push({
+            id: interlocutor,
+            nickname: this.users.find(user => user.id === interlocutor.id).nickname})
+    }
+
     setSockets(messages) {
         let sockets = new Map()
         for (let interlocutorId of messages.keys()) {
             sockets.set(interlocutorId, this.openConnect(interlocutorId))
         }
         this._sockets = sockets;
+    }
+
+    pushNewSocket(interlocutorId) {
+        this.sockets.set(interlocutorId, this.openConnect(interlocutorId))
     }
 
     closeSockets() {
@@ -110,6 +125,10 @@ export default class UserStore {
 
     get user() {
         return this._user;
+    }
+
+    get users() {
+        return this._users;
     }
 
     get interlocutors() {

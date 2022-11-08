@@ -27,7 +27,9 @@ const ChatPage = observer(() => {
     <div class="container mt-3">
         <div class="row clearfix">
             <div class="col-lg-12">
+                {user.interlocutors.length !== 0 ?
                 <div class="card chat-app">
+                    
                     <div id="plist" class="people-list">
                         <ul class="list-unstyled chat-list mt-2 mb-0">
                             {user.interlocutors.map( (interlocutor) =>
@@ -47,8 +49,10 @@ const ChatPage = observer(() => {
                         <div class="chat-history">
                             <ul class="m-b-0">
                                 {console.log(user.messages)}
-                                {user.messages.get(user.selectedInterlocutor.id).map( (message) =>
-                                <Message key={messageId++} message={message}/>)}
+                                {user.messages.get(user.selectedInterlocutor.id).length > 0 ?
+                                user.messages.get(user.selectedInterlocutor.id).map( (message) =>
+                                <Message key={messageId++} message={message}/>)
+                                : null}
                             </ul>
                         </div>
                         <div class="chat-message clearfix">
@@ -59,6 +63,9 @@ const ChatPage = observer(() => {
                         </div>
                     </div>
                 </div>
+                :
+                <p class="text-xl-center fs-1">У вас нет чатов.</p>
+                }
             </div>
         </div>
     </div>

@@ -4,11 +4,11 @@ import Timer from '../components/Timer';
 import {useParams} from 'react-router-dom'
 import { fetchOneLot, changeApproveLot } from '../http/lotAPI';
 import {useNavigate} from 'react-router-dom'
-import { ADMIN_ROUTE } from '../utils/consts';
+import { ADMIN_ROUTE, MYCHATS_ROUTE } from '../utils/consts';
 import { fetchBidsByLotId, createBid } from '../http/bidAPI';
 
 function LotPage() {
-  const {user} = useContext(Context);
+  const {user, lot} = useContext(Context);
   const navigate = useNavigate()
   const [lotItem, setLotItem] = useState({})
   const [imgs, setImgs] = useState([])
@@ -24,22 +24,41 @@ function LotPage() {
     setImgs(imgs)
     setLotItem(data)
   }
+
   const SetBid = (data) => {
     if (data.length !== 0) {
       setHighestBid(data.sort()[data.length - 1].price)
     }
   }
+
   const clickCreateBid = () => {
     createBid(user.user.id, id, price)
   }
+
+  const clickSendMsgToSeller = () => {
+    const sellerId = lot.lots.find(lot => lot.id === Number(id)).userId
+    const seller = {
+      id: sellerId,
+      nickname: user.users.find(user => user.id === sellerId).nickname}
+    if (!user.interlocutors.includes(seller)) {
+      user.pushNewInterlocutor(seller)
+      user.messages.set(sellerId, [])
+      user.pushNewSocket(sellerId)
+    }
+    user.setSelectedInterlocutor(seller)
+    navigate(MYCHATS_ROUTE)
+  }
+
   const approve = () => {
     changeApproveLot(id, "1")
     navigate(ADMIN_ROUTE)
+
   }
   const decline = () => {
     changeApproveLot(id, "2")
     navigate(ADMIN_ROUTE)
   }
+
   useEffect(() => {
     fetchOneLot(id).then(data => SetLot(data))
     fetchBidsByLotId(id).then(data => SetBid(data));
@@ -111,7 +130,7 @@ function LotPage() {
               <input type="text" class="form-control" aria-label="Рубли" value={price} onChange={e => setPrice(e.target.value)}/>
               <span class="input-group-text">₽</span>
               <button class="btn btn-outline-secondary rounded-end" type="button" id="button-addon" onClick={clickCreateBid}>Сделать ставку</button>
-              <button class="btn btn-outline-secondary rounded-2 mx-auto mt-2" type="button">Написать продавцу</button>
+              <button class="btn btn-outline-secondary rounded-2 mx-auto mt-2" type="button" onClick={clickSendMsgToSeller}>Написать продавцу</button>
             </div>
             :
             <p>Авторизуйтесь чтобы сделать ставку или написать продавцу.</p>
