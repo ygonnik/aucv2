@@ -62,7 +62,6 @@ function LotPage() {
   useEffect(() => {
     fetchOneLot(id).then(data => SetLot(data))
     fetchBidsByLotId(id).then(data => SetBid(data));
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   },[])
   const redemption = lotItem.redemption_price > 0
     return (

@@ -13,7 +13,7 @@ export default class UserStore {
     }
 
     openConnect (interlocutorId) {
-        const socket = new WebSocket('ws://localhost:5000/')
+        const socket = new WebSocket('wss://aucv2back.herokuapp.com/')
         socket.onopen = () => {
             socket.send(JSON.stringify({
             user1Id: this.user.id,

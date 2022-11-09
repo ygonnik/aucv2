@@ -8,7 +8,6 @@ function Home() {
 
     useEffect(() => {
         fetchLots().then(data => lot.setLots(data.rows))
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
     return (
     <div class="container">

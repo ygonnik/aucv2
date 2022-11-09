@@ -29,7 +29,6 @@ const App = observer(() => {
       window.addEventListener("beforeunload", (e) => {  
           user.closeSockets()
       });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     if (loading) {
