@@ -5,6 +5,7 @@ import { observer } from 'mobx-react-lite';
 import Message from '../components/Message';
 import {createMessage} from '../http/userAPI'
 
+
 const ChatPage = observer(() => {
     const {user} = useContext(Context);
     const [textboxContent, setTextboxContent] = useState('')
@@ -21,8 +22,9 @@ const ChatPage = observer(() => {
             }
         user.sockets.get(user.selectedInterlocutor.id).send(JSON.stringify(message))
         createMessage(message)
+        setTextboxContent('')
     }
-
+    
     return (
     <div class="container mt-3">
         <div class="row clearfix">
@@ -57,7 +59,9 @@ const ChatPage = observer(() => {
                         </div>
                         <div class="chat-message clearfix">
                             <div class="input-group mb-0">
-                            <input type="text" class="form-control" placeholder="Напишите сообщение..." aria-label="Напишите сообщение..." aria-describedby="button-addon2" onChange={e => setTextboxContent(e.target.value)} value={textboxContent}/>
+                            <input type="text" class="form-control" placeholder="Напишите сообщение..." aria-label="Напишите сообщение..." aria-describedby="button-addon2"
+                            onChange={e => setTextboxContent(e.target.value)} value={textboxContent}
+                            onKeyUp={e => {if (e.code === 'Enter') {SendMessage()}}}/>
                             <button class="btn btn-outline-primary" type="button" id="button-addon2" onClick={SendMessage}>Отправить</button>
                             </div>
                         </div>

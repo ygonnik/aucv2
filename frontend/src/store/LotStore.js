@@ -11,6 +11,10 @@ export default class LotStore {
         this._lots = lots;
     }
 
+    pushNewLot(lot) {
+        this.lots.push(lot)
+    }
+
     setBids(bids) {
         this._bids = bids;
     }

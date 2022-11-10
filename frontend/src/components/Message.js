@@ -10,14 +10,14 @@ const Message = ({message}) => {
             isCurrentUserSender ?
             <li class="clearfix">
                 <div class="message-data text-end">
-                    <span class="message-data-time">{message.send_at}</span>
+                    <span class="message-data-time">{new Date(message.send_at).toLocaleString()}</span>
                 </div>
                 <div class="message other-message float-right"> {message.content} </div>
             </li>
             :
             <li class="clearfix">
                 <div class="message-data">
-                    <span class="message-data-time">{message.send_at}</span>
+                    <span class="message-data-time">{new Date(message.send_at).toLocaleString()}</span>
                 </div>
                 <div class="message my-message"> {message.content} </div>
             </li>

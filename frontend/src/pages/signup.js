@@ -19,15 +19,9 @@ const Signup = observer(() => {
             dataUser = await registration(email, nickname, password)
             user.setUser(dataUser)
             user.setIsAuth(true)
-            fetchMessages(user.user.id)
+            fetchUsersNicknames()
             .then(data => {
-                user.setMessages(data)
-                user.setSockets(user.messages)
-            }).then(fetchUsersNicknames()
-            .then(data => {
-                user.setUsers(data)
-                user.setInterlocutors(data)
-                user.setSelectedInterlocutor(user.interlocutors[0])}))
+                user.setUsers(data)})
             navigate(HOME_ROUTE)
         }
         catch (e) {

@@ -26,6 +26,7 @@ const App = observer(() => {
           user.setSelectedInterlocutor(user.interlocutors[0])}))
         
       }).finally(() => setLoading(false))
+
       window.addEventListener("beforeunload", (e) => {  
           user.closeSockets()
       });

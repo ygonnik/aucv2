@@ -7,7 +7,7 @@ import { HOME_ROUTE } from '../utils/consts';
 
 const AddLot = observer(() => {
     const navigate = useNavigate()
-    const {user} = useContext(Context)
+    const {user, lot} = useContext(Context)
     const [end_at, setEnd_at] = useState(0)
     const [body_style, setBody_style] = useState('')
     const [brand, setBrand] = useState('')
@@ -30,7 +30,6 @@ const AddLot = observer(() => {
             const formData = new FormData()
             console.log(end_at)
             formData.append('end_at', new Date(+new Date() + Number(end_at)))
-            console.log(new Date(+new Date() + end_at))
             formData.append('body_style', body_style)
             formData.append('brand', brand)
             formData.append('model', model)
@@ -50,7 +49,7 @@ const AddLot = observer(() => {
             for(let file of img) {
                 formData.append(file.name, file)
             }
-            createLot(formData)
+            lot.pushNewLot(JSON.parse(createLot(formData)))
             navigate(HOME_ROUTE)
         }
         catch (e) {

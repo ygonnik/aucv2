@@ -60,7 +60,7 @@ function LotPage() {
   }
 
   useEffect(() => {
-    fetchOneLot(id).then(data => SetLot(data))
+    SetLot(lot.lots.find(lot => lot.id === Number(id)))
     fetchBidsByLotId(id).then(data => SetBid(data));
   },[])
   const redemption = lotItem.redemption_price > 0
