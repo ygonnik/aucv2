@@ -6,9 +6,9 @@ module.exports = new Sequelize(
     {
         dialect: 'postgres',
         dialectOptions: {
-            ssl: {
-                rejectUnauthorized: false
-            }
+            // ssl: {
+            //     rejectUnauthorized: false
+            // }
         },
         host: process.env.POSTGRES_HOST,
         port: process.env.POSTGRES_PORTDB_PORT
