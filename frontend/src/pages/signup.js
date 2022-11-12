@@ -4,6 +4,7 @@ import {registration, fetchUsersNicknames, fetchMessages} from '../http/userAPI'
 import {useNavigate} from 'react-router-dom'
 import { HOME_ROUTE } from '../utils/consts';
 import {observer} from "mobx-react-lite";
+import { set } from 'mobx';
 
 const Signup = observer(() => {
     const navigate = useNavigate()
@@ -12,20 +13,32 @@ const Signup = observer(() => {
     const [nickname, setNickname] = useState('')
     const [password, setPassword] = useState('')
     const [repeatPassword, setRepeatPassword] = useState('')
+    const [admin, setAdmin] = useState(false)
 
     const clickRegister = async () => {
         try {
-            let dataUser
-            dataUser = await registration(email, nickname, password)
-            user.setUser(dataUser)
-            user.setIsAuth(true)
+            const role = admin ? 'ADMIN' : 'USER'
+            registration(email, nickname, password, role).then((data) => {
+                user.setUser(data)
+                user.setIsAuth(true)
+            }).then(
             fetchUsersNicknames()
             .then(data => {
-                user.setUsers(data)})
+                user.setUsers(data)}))
             navigate(HOME_ROUTE)
         }
         catch (e) {
             alert(e.response.data.message)
+        }
+    }
+    const checkCheckBox = async () => {
+        if (document.getElementById('flexCheckDefault').hasAttribute('checked')) {
+            document.getElementById('flexCheckDefault').removeAttribute('checked')
+            setAdmin(false)
+        }
+        else {
+            document.getElementById('flexCheckDefault').setAttribute('checked', '')
+            setAdmin(true)
         }
     }
     return (
@@ -53,11 +66,17 @@ const Signup = observer(() => {
                     <label for="floatingPassword">Пароль</label>
                     
                 </div>
-                <div class="form-floating mb-2">
+                <div class="form-floating mb-1">
                     <input type="password" class="form-control rounded-0" id="floatingRepeatPassword" placeholder="Password"
                     value={repeatPassword}
                     onChange={e => setRepeatPassword(e.target.value)}/>
                     <label for="floatingPassword">Повторите пароль</label>
+                </div>
+                <div class="form-check mb-2 d-flex justify-content-center" onClick={checkCheckBox}>
+                    <input class="form-check-input me-1" type="checkbox" value="" id="flexCheckDefault"/>
+                    <label class="form-check-label" for="flexCheckDefault">
+                        Администратор
+                    </label>
                 </div>
                 { (password !== repeatPassword) ?
                 <div>

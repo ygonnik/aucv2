@@ -16,7 +16,7 @@ class LotController {
             });
             let fileName
             let result = ''
-            for(let item of files[0]){
+            for(let item of files){
                 fileName = uuid.v4() + ".jpg"
                 item.mv(path.resolve(__dirname, '..', '..', 'static', fileName))
                 result += fileName + ' '

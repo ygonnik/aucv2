@@ -6,14 +6,16 @@ import { fetchOneLot, changeApproveLot } from '../http/lotAPI';
 import {useNavigate} from 'react-router-dom'
 import { ADMIN_ROUTE, MYCHATS_ROUTE } from '../utils/consts';
 import { fetchBidsByLotId, createBid } from '../http/bidAPI';
+import { observer } from 'mobx-react-lite';
 
-function LotPage() {
+const LotPage = observer(() => {
   const {user, lot} = useContext(Context);
   const navigate = useNavigate()
   const [lotItem, setLotItem] = useState({})
   const [imgs, setImgs] = useState([])
   const [firstImg, setFirstImg] = useState(null)
   const [highestBid, setHighestBid] = useState(0)
+  const [leader, setLeader] = useState(null)
   const [price, setPrice] = useState(0)
   const {id} = useParams()
 
@@ -27,12 +29,18 @@ function LotPage() {
 
   const SetBid = (data) => {
     if (data.length !== 0) {
-      setHighestBid(data.sort()[data.length - 1].price)
+      const bid = data.sort()[data.length - 1]
+      setHighestBid(bid.price)
+      setLeader(user.users.find(user => user.id === bid.userId).nickname)
     }
   }
 
   const clickCreateBid = () => {
-    createBid(user.user.id, id, price)
+    createBid(user.user.id, id, price).then((data) => {
+      lot.pushNewBid(data)
+      SetBid(lot.bids)
+    })
+    setPrice('')
   }
 
   const clickSendMsgToSeller = () => {
@@ -113,7 +121,6 @@ function LotPage() {
                   :
                     <td>Ставок нет</td>
                   }
-                  
                 </tr>
                 { redemption ?
                 <tr>
@@ -122,15 +129,30 @@ function LotPage() {
                 </tr>
                 : null
                 }
+                <tr>
+                  <th scope="row">Лидер</th>
+                  { leader !== null
+                  ?
+                    <td>{leader}</td>
+                  :
+                    <td>Лидера нет</td>
+                  }
+                </tr>
               </tbody>
             </table>
-            { user.isAuth ?
+            { user.isAuth &&  user.user.id !== Number(id) ?
             <div class="input-group mt-2">
               <input type="text" class="form-control" aria-label="Рубли" value={price} onChange={e => setPrice(e.target.value)}/>
               <span class="input-group-text">₽</span>
-              <button class="btn btn-outline-secondary rounded-end" type="button" id="button-addon" onClick={clickCreateBid}>Сделать ставку</button>
+              <button class="btn btn-outline-secondary rounded-end" type="button" id="button-addon"
+              onClick={clickCreateBid}
+              onKeyUp={e => {if (e.code === 'Enter') {clickCreateBid()}}}
+              >Сделать ставку</button>
               <button class="btn btn-outline-secondary rounded-2 mx-auto mt-2" type="button" onClick={clickSendMsgToSeller}>Написать продавцу</button>
             </div>
+            :
+            user.isAuth ?
+            <p>Это ваш лот.</p>
             :
             <p>Авторизуйтесь чтобы сделать ставку или написать продавцу.</p>
             }
@@ -210,6 +232,6 @@ function LotPage() {
         </div>
       </div>
     );
-};
+});
 
 export default LotPage;

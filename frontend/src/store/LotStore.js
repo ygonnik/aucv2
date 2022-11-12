@@ -19,6 +19,10 @@ export default class LotStore {
         this._bids = bids;
     }
 
+    pushNewBid(bid) {
+        this.bids.push(bid)
+    }
+
     get lots() {
         return this._lots;
     }

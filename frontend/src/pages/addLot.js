@@ -3,7 +3,7 @@ import {observer} from "mobx-react-lite";
 import {Context} from "../index";
 import {useNavigate} from 'react-router-dom'
 import { createLot } from '../http/lotAPI';
-import { HOME_ROUTE } from '../utils/consts';
+import { MYLOTS_ROUTE } from '../utils/consts';
 
 const AddLot = observer(() => {
     const navigate = useNavigate()
@@ -49,8 +49,8 @@ const AddLot = observer(() => {
             for(let file of img) {
                 formData.append(file.name, file)
             }
-            lot.pushNewLot(JSON.parse(createLot(formData)))
-            navigate(HOME_ROUTE)
+            createLot(formData).then(data => lot.pushNewLot(data))
+            navigate(MYLOTS_ROUTE)
         }
         catch (e) {
             alert(e.response.data.message)
