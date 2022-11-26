@@ -1,11 +1,13 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import {HOME_ROUTE} from '../utils/consts'
 import {useNavigate} from 'react-router-dom'
 import {observer} from "mobx-react-lite"
 import SignIn from './modals/SignIn'
+import {Context} from '../index'
 
 const NavBar = observer(() => {
     const navigate = useNavigate()
+    const {user} = useContext(Context);
     const goHome = () => {
         navigate(HOME_ROUTE)
     }
@@ -20,6 +22,12 @@ const NavBar = observer(() => {
                         </svg>
                         <strong class="ms-2">Аукцион</strong>
                     </a>
+                    {
+                        user.isAuth ?
+                        <p class="bg-dark shadow text-white" >Вы - {user.user.nickname}</p>
+                        : null
+                    }
+                    
                     <SignIn />
                 </div>
             </div>

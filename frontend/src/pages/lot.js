@@ -140,21 +140,21 @@ const LotPage = observer(() => {
                 </tr>
               </tbody>
             </table>
-            { user.isAuth &&  user.user.id !== Number(id) ?
+            { !user.isAuth ?
+              <p>Авторизуйтесь чтобы сделать ставку или написать продавцу.</p>
+            :
+            user.user.id !== lotItem.userId ?
             <div class="input-group mt-2">
               <input type="text" class="form-control" aria-label="Рубли" value={price} onChange={e => setPrice(e.target.value)}/>
               <span class="input-group-text">₽</span>
               <button class="btn btn-outline-secondary rounded-end" type="button" id="button-addon"
-              onClick={clickCreateBid}
-              onKeyUp={e => {if (e.code === 'Enter') {clickCreateBid()}}}
-              >Сделать ставку</button>
+                onClick={clickCreateBid}
+                onKeyUp={e => {if (e.code === 'Enter') {clickCreateBid()}}}
+                >Сделать ставку</button>
               <button class="btn btn-outline-secondary rounded-2 mx-auto mt-2" type="button" onClick={clickSendMsgToSeller}>Написать продавцу</button>
             </div>
             :
-            user.isAuth ?
             <p>Это ваш лот.</p>
-            :
-            <p>Авторизуйтесь чтобы сделать ставку или написать продавцу.</p>
             }
           </div>
         </div>
