@@ -18,6 +18,19 @@
 * JWT-токены
 * WebSockets
 
+### Запуск
+1. Backend
+* cd .\backend\
+* docker-compose -f docker-compose-local.yml build
+* docker-compose -f docker-compose-local.yml up
+
+2. Frontend
+* cd .\frontend\
+* docker-compose build
+* docker-compose up
+
+Сайт доступен по адресу http://localhost:3000/
+
 ### ТЗ
 1. Пользователи
 * Данные: логин, почта, пароль. Вход возможен и по логину и по почте.
