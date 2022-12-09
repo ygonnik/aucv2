@@ -1,9 +1,5 @@
 # Автоаукцион
-[Heroku](https://aucv2front.herokuapp.com/)
-
 [Схема БД](https://dbdiagram.io/d/632336390911f91ba5bcc325)
-
-[Причина отсутствия картинок у существующих лотов](https://stackoverflow.com/questions/24642967/can-i-host-images-in-heroku-or-do-i-need-s3)
 
 ### Используемые технологии
 * Node.js
